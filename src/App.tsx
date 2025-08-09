@@ -3,7 +3,14 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import { CRMLayout } from "@/components/layout/CRMLayout";
+import Dashboard from "./pages/Dashboard";
+import Calendar from "./pages/Calendar";
+import ActivityFeed from "./pages/ActivityFeed";
+import Accounts from "./pages/customers/Accounts";
+import Contacts from "./pages/customers/Contacts";
+import Leads from "./pages/sales/Leads";
+import Opportunities from "./pages/sales/Opportunities";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -14,11 +21,19 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <CRMLayout>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/feed" element={<ActivityFeed />} />
+            <Route path="/customers/accounts" element={<Accounts />} />
+            <Route path="/customers/contacts" element={<Contacts />} />
+            <Route path="/sales/leads" element={<Leads />} />
+            <Route path="/sales/opportunities" element={<Opportunities />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </CRMLayout>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
