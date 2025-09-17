@@ -14,7 +14,7 @@ import {
   TableRow,
   useTheme
 } from '@mui/material';
-import { MUIToolbar } from '../../components/layout/MUIToolbar';
+import { MUIToolbar } from '../../components/layout/MUIToolbar.jsx';
 
 const MUIContacts = () => {
   const theme = useTheme();

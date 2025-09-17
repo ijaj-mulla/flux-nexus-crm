@@ -23,7 +23,7 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material';
-import { MUIToolbar } from '../../components/layout/MUIToolbar';
+import { MUIToolbar } from '../../components/layout/MUIToolbar.jsx';
 
 const MUILeads = () => {
   const theme = useTheme();
