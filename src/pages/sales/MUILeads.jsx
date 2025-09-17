@@ -23,6 +23,9 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material';
+import {
+  PersonAdd
+} from '@mui/icons-material';
 import { MUIToolbar } from '../../components/layout/MUIToolbar.jsx';
 
 const MUILeads = () => {
@@ -438,40 +441,89 @@ const MUILeads = () => {
       <MUIToolbar title="Leads" onAction={handleToolbarAction} />
       
       <Box sx={{ p: 3 }}>
-        <Paper>
+        <Paper sx={{ 
+          borderRadius: 3,
+          overflow: 'hidden',
+          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+          border: '1px solid #e2e8f0'
+        }}>
           <TableContainer>
-            <Table>
+            <Table sx={{ minWidth: 650 }}>
               <TableHead>
                 <TableRow>
-                   <TableCell>Name</TableCell>
-                   <TableCell>Company</TableCell>
-                   <TableCell>Email</TableCell>
-                   <TableCell>Status</TableCell>
-                   <TableCell>Priority</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Name</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Company</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Email</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Status</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Priority</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {leads.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
-                      <Typography color="textSecondary">
-                        No leads found. Click the Add button to create your first lead.
-                      </Typography>
+                    <TableCell colSpan={5} align="center" sx={{ py: 8 }}>
+                      <Box sx={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center',
+                        gap: 2
+                      }}>
+                        <PersonAdd sx={{ fontSize: 48, color: 'grey.400' }} />
+                        <Typography variant="h6" color="textSecondary">
+                          No leads found
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          Click the Add button to create your first lead
+                        </Typography>
+                      </Box>
                     </TableCell>
                   </TableRow>
                 ) : (
-                  leads.map((lead) => (
+                  leads.map((lead, index) => (
                     <TableRow 
                       key={lead.id} 
                       hover 
                       onClick={handleLeadClick}
-                      sx={{ cursor: 'pointer' }}
+                      sx={{ 
+                        cursor: 'pointer',
+                        '&:hover': { 
+                          backgroundColor: '#f8fafc',
+                          transform: 'scale(1.001)',
+                          transition: 'all 0.2s'
+                        }
+                      }}
                     >
-                       <TableCell>{lead.name}</TableCell>
-                       <TableCell>{lead.company}</TableCell>
-                       <TableCell>{lead.email}</TableCell>
-                       <TableCell>{lead.status}</TableCell>
-                       <TableCell>{lead.priority}</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>{lead.name}</TableCell>
+                      <TableCell>{lead.company}</TableCell>
+                      <TableCell sx={{ color: '#1976D2' }}>{lead.email}</TableCell>
+                      <TableCell>
+                        <Box sx={{
+                          display: 'inline-block',
+                          px: 2,
+                          py: 0.5,
+                          borderRadius: 20,
+                          backgroundColor: lead.status === 'Qualified' ? '#e8f5e8' : '#fff3cd',
+                          color: lead.status === 'Qualified' ? '#2e7d2e' : '#8a6d3b',
+                          fontSize: '0.75rem',
+                          fontWeight: 600
+                        }}>
+                          {lead.status}
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Box sx={{
+                          display: 'inline-block',
+                          px: 2,
+                          py: 0.5,
+                          borderRadius: 20,
+                          backgroundColor: lead.priority === 'High' ? '#ffebee' : lead.priority === 'Medium' ? '#fff3e0' : '#f3e5f5',
+                          color: lead.priority === 'High' ? '#c62828' : lead.priority === 'Medium' ? '#ef6c00' : '#7b1fa2',
+                          fontSize: '0.75rem',
+                          fontWeight: 600
+                        }}>
+                          {lead.priority}
+                        </Box>
+                      </TableCell>
                     </TableRow>
                   ))
                 )}

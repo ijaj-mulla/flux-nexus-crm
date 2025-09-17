@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  AppBar,
-  Toolbar,
+  Paper,
   Typography,
   IconButton,
   Tooltip,
@@ -10,77 +9,143 @@ import {
 } from '@mui/material';
 import {
   Search,
-  SwapVert,
-  PieChartOutline,
-  FilterAlt,
-  AddCircleOutline,
+  Sort,
+  PieChart,
+  FilterList,
+  Add,
   Refresh,
   MoreHoriz
 } from '@mui/icons-material';
 
 export const MUIToolbar = ({ title, onAction }) => {
-  const theme = useTheme();
-
-  const toolbarActions = [
-    { icon: <Search />, label: 'Search', action: 'search' },
-    { icon: <SwapVert />, label: 'Sort', action: 'sort' },
-    { icon: <PieChartOutline />, label: 'Chart/Stats', action: 'chart' },
-    { icon: <FilterAlt />, label: 'Filter', action: 'filter' },
-    { icon: <AddCircleOutline />, label: 'Add New', action: 'add' },
-    { icon: <Refresh />, label: 'Refresh', action: 'refresh' },
-    { icon: <MoreHoriz />, label: 'More Options', action: 'more' }
-  ];
-
-  const handleAction = (action) => {
-    if (onAction) {
-      onAction(action);
-    }
-  };
 
   return (
-    <AppBar 
-      position="static" 
-      color="inherit" 
-      elevation={1}
+    <Paper 
+      elevation={0} 
       sx={{ 
-        backgroundColor: 'white',
-        borderBottom: `1px solid ${theme.palette.divider}`
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        p: 3,
+        mb: 2,
+        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+        border: '1px solid #e2e8f0',
+        borderRadius: 3
       }}
     >
-      <Toolbar>
-        {title && (
-          <Typography 
-            variant="h6" 
-            component="h1" 
+      <Typography 
+        variant="h4" 
+        sx={{ 
+          fontWeight: 700,
+          background: 'linear-gradient(135deg, #004B87 0%, #1976D2 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}
+      >
+        {title}
+      </Typography>
+      
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        <Tooltip title="Search">
+          <IconButton 
             sx={{ 
-              flexGrow: 1,
-              color: theme.palette.text.primary,
-              fontWeight: 600
+              color: '#004B87',
+              backgroundColor: '#f0f7ff',
+              '&:hover': { backgroundColor: '#e0f2fe', transform: 'scale(1.05)' },
+              transition: 'all 0.2s'
             }}
           >
-            {title}
-          </Typography>
-        )}
+            <Search />
+          </IconButton>
+        </Tooltip>
         
-        <Box sx={{ display: 'flex', gap: 0.5 }}>
-          {toolbarActions.map((action) => (
-            <Tooltip key={action.action} title={action.label}>
-              <IconButton
-                onClick={() => handleAction(action.action)}
-                sx={{
-                  color: theme.palette.primary.main,
-                  '&:hover': {
-                    backgroundColor: theme.palette.primary.main,
-                    color: 'white',
-                  },
-                }}
-              >
-                {action.icon}
-              </IconButton>
-            </Tooltip>
-          ))}
-        </Box>
-      </Toolbar>
-    </AppBar>
+        <Tooltip title="Sort">
+          <IconButton 
+            sx={{ 
+              color: '#004B87',
+              backgroundColor: '#f0f7ff',
+              '&:hover': { backgroundColor: '#e0f2fe', transform: 'scale(1.05)' },
+              transition: 'all 0.2s'
+            }}
+          >
+            <Sort />
+          </IconButton>
+        </Tooltip>
+        
+        <Tooltip title="Analytics">
+          <IconButton 
+            sx={{ 
+              color: '#004B87',
+              backgroundColor: '#f0f7ff',
+              '&:hover': { backgroundColor: '#e0f2fe', transform: 'scale(1.05)' },
+              transition: 'all 0.2s'
+            }}
+          >
+            <PieChart />
+          </IconButton>
+        </Tooltip>
+        
+        <Tooltip title="Filter">
+          <IconButton 
+            sx={{ 
+              color: '#004B87',
+              backgroundColor: '#f0f7ff',
+              '&:hover': { backgroundColor: '#e0f2fe', transform: 'scale(1.05)' },
+              transition: 'all 0.2s'
+            }}
+          >
+            <FilterList />
+          </IconButton>
+        </Tooltip>
+        
+        <Tooltip title="Add New">
+          <IconButton 
+            onClick={() => onAction('add')}
+            sx={{ 
+              color: '#ffffff',
+              background: 'linear-gradient(135deg, #38a169 0%, #2f855a 100%)',
+              '&:hover': { 
+                background: 'linear-gradient(135deg, #2f855a 0%, #276749 100%)',
+                transform: 'scale(1.05)',
+                boxShadow: '0 4px 12px rgba(56, 161, 105, 0.3)'
+              },
+              transition: 'all 0.2s'
+            }}
+          >
+            <Add />
+          </IconButton>
+        </Tooltip>
+        
+        <Tooltip title="Refresh">
+          <IconButton 
+            sx={{ 
+              color: '#004B87',
+              backgroundColor: '#f0f7ff',
+              '&:hover': { backgroundColor: '#e0f2fe', transform: 'scale(1.05)' },
+              transition: 'all 0.2s'
+            }}
+          >
+            <Refresh />
+          </IconButton>
+        </Tooltip>
+        
+        <Tooltip title="More Options">
+          <IconButton 
+            sx={{ 
+              color: '#004B87',
+              backgroundColor: '#f0f7ff',
+              '&:hover': { backgroundColor: '#e0f2fe', transform: 'scale(1.05)' },
+              transition: 'all 0.2s'
+            }}
+          >
+            <MoreHoriz />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    </Paper>
   );
 };
