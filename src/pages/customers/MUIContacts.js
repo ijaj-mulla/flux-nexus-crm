@@ -23,18 +23,26 @@ const MUIContacts = () => {
     {
       id: 1,
       name: 'John Smith',
-      email: 'john@example.com',
+      email: 'john.smith@abc.com',
       phone: '+1-555-0123',
       mobile: '+1-555-0124',
-      address: '123 Main St, New York'
+      role: 'CEO'
     },
     {
       id: 2,
       name: 'Sarah Johnson',
-      email: 'sarah@example.com',
+      email: 'sarah.johnson@xyz.com',
       phone: '+1-555-0125',
       mobile: '+1-555-0126',
-      address: '456 Oak Ave, Boston'
+      role: 'CTO'
+    },
+    {
+      id: 3,
+      name: 'Michael Brown',
+      email: 'michael.brown@global.com',
+      phone: '+1-555-0127',
+      mobile: '+1-555-0128',
+      role: 'VP Sales'
     }
   ]);
   const [formData, setFormData] = useState({
@@ -160,11 +168,11 @@ const MUIContacts = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Mobile</TableCell>
-                  <TableCell>Address</TableCell>
+                   <TableCell>Name</TableCell>
+                   <TableCell>Email</TableCell>
+                   <TableCell>Phone</TableCell>
+                   <TableCell>Mobile</TableCell>
+                   <TableCell>Role</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -179,11 +187,11 @@ const MUIContacts = () => {
                 ) : (
                   contacts.map((contact) => (
                     <TableRow key={contact.id}>
-                      <TableCell>{contact.name}</TableCell>
-                      <TableCell>{contact.email}</TableCell>
-                      <TableCell>{contact.phone}</TableCell>
-                      <TableCell>{contact.mobile}</TableCell>
-                      <TableCell>{contact.address}</TableCell>
+                       <TableCell>{contact.name}</TableCell>
+                       <TableCell>{contact.email}</TableCell>
+                       <TableCell>{contact.phone}</TableCell>
+                       <TableCell>{contact.mobile}</TableCell>
+                       <TableCell>{contact.role}</TableCell>
                     </TableRow>
                   ))
                 )}

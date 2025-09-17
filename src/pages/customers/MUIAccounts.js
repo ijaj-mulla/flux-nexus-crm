@@ -31,16 +31,24 @@ const MUIAccounts = () => {
       accountName: 'ABC Corporation',
       accountType: 'customer',
       website: 'www.abc.com',
-      city: 'New York',
+      industryHorizontal: 'Technology',
       owner: 'John Doe'
     },
     {
       id: 2,
-      accountName: 'XYZ Ltd',
+      accountName: 'XYZ Manufacturing Ltd',
       accountType: 'prospect',
-      website: 'www.xyz.com',
-      city: 'Boston',
+      website: 'www.xyz-mfg.com',
+      industryHorizontal: 'Manufacturing',
       owner: 'Jane Smith'
+    },
+    {
+      id: 3,
+      accountName: 'Global Services Inc',
+      accountType: 'partner',
+      website: 'www.globalservices.com',
+      industryHorizontal: 'Services',
+      owner: 'Mike Johnson'
     }
   ]);
   const [formData, setFormData] = useState({
@@ -420,11 +428,11 @@ const MUIAccounts = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Account Name</TableCell>
-                  <TableCell>Account Type</TableCell>
-                  <TableCell>Website</TableCell>
-                  <TableCell>City</TableCell>
-                  <TableCell>Owner</TableCell>
+                   <TableCell>Account Name</TableCell>
+                   <TableCell>Account Type</TableCell>
+                   <TableCell>Industry</TableCell>
+                   <TableCell>Website</TableCell>
+                   <TableCell>Owner</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -439,11 +447,11 @@ const MUIAccounts = () => {
                 ) : (
                   accounts.map((account) => (
                     <TableRow key={account.id}>
-                      <TableCell>{account.accountName}</TableCell>
-                      <TableCell>{account.accountType}</TableCell>
-                      <TableCell>{account.website}</TableCell>
-                      <TableCell>{account.city}</TableCell>
-                      <TableCell>{account.owner}</TableCell>
+                       <TableCell>{account.accountName}</TableCell>
+                       <TableCell>{account.accountType}</TableCell>
+                       <TableCell>{account.industryHorizontal}</TableCell>
+                       <TableCell>{account.website}</TableCell>
+                       <TableCell>{account.owner}</TableCell>
                     </TableRow>
                   ))
                 )}

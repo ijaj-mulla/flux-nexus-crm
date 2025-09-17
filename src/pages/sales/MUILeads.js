@@ -35,17 +35,25 @@ const MUILeads = () => {
       id: 1,
       name: 'Tech Solutions Lead',
       company: 'TechCorp Inc',
+      email: 'contact@techcorp.com',
       status: 'In Process',
-      priority: 'High',
-      owner: 'Alice Brown'
+      priority: 'High'
     },
     {
       id: 2,
       name: 'Marketing Campaign Lead',
-      company: 'Digital Agency',
+      company: 'Digital Agency Ltd',
+      email: 'sales@digitalagency.com',
       status: 'Qualified',
-      priority: 'Medium',
-      owner: 'Bob Wilson'
+      priority: 'Medium'
+    },
+    {
+      id: 3,
+      name: 'Enterprise Software Lead',
+      company: 'Enterprise Solutions',
+      email: 'info@enterprise.com',
+      status: 'In Process',
+      priority: 'Low'
     }
   ]);
   const [detailsTab, setDetailsTab] = useState(0);
@@ -435,11 +443,11 @@ const MUILeads = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Company</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Priority</TableCell>
-                  <TableCell>Owner</TableCell>
+                   <TableCell>Name</TableCell>
+                   <TableCell>Company</TableCell>
+                   <TableCell>Email</TableCell>
+                   <TableCell>Status</TableCell>
+                   <TableCell>Priority</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -459,11 +467,11 @@ const MUILeads = () => {
                       onClick={handleLeadClick}
                       sx={{ cursor: 'pointer' }}
                     >
-                      <TableCell>{lead.name}</TableCell>
-                      <TableCell>{lead.company}</TableCell>
-                      <TableCell>{lead.status}</TableCell>
-                      <TableCell>{lead.priority}</TableCell>
-                      <TableCell>{lead.owner}</TableCell>
+                       <TableCell>{lead.name}</TableCell>
+                       <TableCell>{lead.company}</TableCell>
+                       <TableCell>{lead.email}</TableCell>
+                       <TableCell>{lead.status}</TableCell>
+                       <TableCell>{lead.priority}</TableCell>
                     </TableRow>
                   ))
                 )}
