@@ -19,7 +19,24 @@ import { MUIToolbar } from '../../components/layout/MUIToolbar';
 const MUIContacts = () => {
   const theme = useTheme();
   const [showForm, setShowForm] = useState(false);
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState([
+    {
+      id: 1,
+      name: 'John Smith',
+      email: 'john@example.com',
+      phone: '+1-555-0123',
+      mobile: '+1-555-0124',
+      address: '123 Main St, New York'
+    },
+    {
+      id: 2,
+      name: 'Sarah Johnson',
+      email: 'sarah@example.com',
+      phone: '+1-555-0125',
+      mobile: '+1-555-0126',
+      address: '456 Oak Ave, Boston'
+    }
+  ]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',

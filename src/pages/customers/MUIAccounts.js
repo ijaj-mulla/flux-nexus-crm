@@ -25,7 +25,24 @@ const MUIAccounts = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [showForm, setShowForm] = useState(false);
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState([
+    {
+      id: 1,
+      accountName: 'ABC Corporation',
+      accountType: 'customer',
+      website: 'www.abc.com',
+      city: 'New York',
+      owner: 'John Doe'
+    },
+    {
+      id: 2,
+      accountName: 'XYZ Ltd',
+      accountType: 'prospect',
+      website: 'www.xyz.com',
+      city: 'Boston',
+      owner: 'Jane Smith'
+    }
+  ]);
   const [formData, setFormData] = useState({
     accountId: '',
     accountType: '',

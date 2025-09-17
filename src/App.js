@@ -18,7 +18,6 @@ function App() {
             <Route path="/" element={<div style={{ padding: '24px' }}>Dashboard - Coming Soon</div>} />
             <Route path="/dashboard" element={<div style={{ padding: '24px' }}>Dashboard - Coming Soon</div>} />
             <Route path="/calendar" element={<div style={{ padding: '24px' }}>Calendar - Coming Soon</div>} />
-            <Route path="/activity-feed" element={<div style={{ padding: '24px' }}>Activity Feed - Coming Soon</div>} />
             <Route path="/customers/accounts" element={<MUIAccounts />} />
             <Route path="/customers/contacts" element={<MUIContacts />} />
             <Route path="/customers/hierarchy" element={<div style={{ padding: '24px' }}>Account Hierarchy - Coming Soon</div>} />
@@ -29,11 +28,6 @@ function App() {
             <Route path="/activities/appointments" element={<div style={{ padding: '24px' }}>Appointments - Coming Soon</div>} />
             <Route path="/activities/emails" element={<div style={{ padding: '24px' }}>E-Mails - Coming Soon</div>} />
             <Route path="/activities/tasks" element={<div style={{ padding: '24px' }}>Tasks - Coming Soon</div>} />
-            <Route path="/products" element={<div style={{ padding: '24px' }}>Products - Coming Soon</div>} />
-            <Route path="/analysis/leads" element={<div style={{ padding: '24px' }}>Leads Analysis - Coming Soon</div>} />
-            <Route path="/analysis/sales" element={<div style={{ padding: '24px' }}>Sales Analysis - Coming Soon</div>} />
-            <Route path="/competitors" element={<div style={{ padding: '24px' }}>Competitors - Coming Soon</div>} />
-            <Route path="/partners" element={<div style={{ padding: '24px' }}>Partners - Coming Soon</div>} />
             <Route path="/visits" element={<div style={{ padding: '24px' }}>Visits - Coming Soon</div>} />
             <Route path="/integrations/email" element={<div style={{ padding: '24px' }}>Email Integration - Coming Soon</div>} />
             <Route path="/integrations/google" element={<div style={{ padding: '24px' }}>Google Leads Integration - Coming Soon</div>} />

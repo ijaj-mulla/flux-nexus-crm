@@ -71,7 +71,6 @@ export const MUISidebar = ({ open, onClose }) => {
     { label: 'Home', icon: <Home />, path: '/' },
     { label: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
     { label: 'Calendar', icon: <CalendarToday />, path: '/calendar' },
-    { label: 'Feed', icon: <Feed />, path: '/activity-feed' },
     {
       label: 'Customers',
       icon: <People />,
@@ -103,18 +102,6 @@ export const MUISidebar = ({ open, onClose }) => {
         { label: 'Tasks', icon: <Assignment />, path: '/activities/tasks' }
       ]
     },
-    { label: 'Products', icon: <Inventory />, path: '/products' },
-    {
-      label: 'Analysis',
-      icon: <Analytics />,
-      expandKey: 'analysis',
-      children: [
-        { label: 'Leads Analysis', icon: <Analytics />, path: '/analysis/leads' },
-        { label: 'Sales Analysis', icon: <Analytics />, path: '/analysis/sales' }
-      ]
-    },
-    { label: 'Competitors', icon: <CompareArrows />, path: '/competitors' },
-    { label: 'Partners', icon: <Handshake />, path: '/partners' },
     { label: 'Visits', icon: <VisibilityOutlined />, path: '/visits' },
     {
       label: 'Integrations',

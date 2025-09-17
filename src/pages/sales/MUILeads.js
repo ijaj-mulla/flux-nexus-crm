@@ -30,7 +30,24 @@ const MUILeads = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [showForm, setShowForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [leads, setLeads] = useState([]);
+  const [leads, setLeads] = useState([
+    {
+      id: 1,
+      name: 'Tech Solutions Lead',
+      company: 'TechCorp Inc',
+      status: 'In Process',
+      priority: 'High',
+      owner: 'Alice Brown'
+    },
+    {
+      id: 2,
+      name: 'Marketing Campaign Lead',
+      company: 'Digital Agency',
+      status: 'Qualified',
+      priority: 'Medium',
+      owner: 'Bob Wilson'
+    }
+  ]);
   const [detailsTab, setDetailsTab] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
