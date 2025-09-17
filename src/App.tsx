@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CRMLayout } from "@/components/layout/CRMLayout";
 import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
-import ActivityFeed from "./pages/ActivityFeed";
 import Accounts from "./pages/customers/Accounts";
 import Contacts from "./pages/customers/Contacts";
 import Leads from "./pages/sales/Leads";
@@ -25,7 +24,6 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/feed" element={<ActivityFeed />} />
             <Route path="/customers/accounts" element={<Accounts />} />
             <Route path="/customers/contacts" element={<Contacts />} />
             <Route path="/sales/leads" element={<Leads />} />

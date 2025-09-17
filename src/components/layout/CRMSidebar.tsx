@@ -33,23 +33,12 @@ const menuItems: MenuItem[] = [
   {
     name: "Home",
     icon: Home,
-    children: [
-      { name: "Dashboard", icon: Home, path: "/" }
-    ]
+    path: "/"
   },
   {
     name: "Calendar", 
     icon: Calendar,
-    children: [
-      { name: "Personal Calendar", icon: Calendar, path: "/calendar" }
-    ]
-  },
-  {
-    name: "Feed",
-    icon: Activity,
-    children: [
-      { name: "Activity Feed", icon: Activity, path: "/feed" }
-    ]
+    path: "/calendar"
   },
   {
     name: "Customers",
@@ -77,35 +66,6 @@ const menuItems: MenuItem[] = [
       { name: "Appointments", icon: Calendar, path: "/activities/appointments" },
       { name: "E-Mails", icon: Activity, path: "/activities/emails" },
       { name: "Tasks", icon: ClipboardList, path: "/activities/tasks" }
-    ]
-  },
-  {
-    name: "Products",
-    icon: Package,
-    children: [
-      { name: "Product Catalog", icon: Package, path: "/products/catalog" }
-    ]
-  },
-  {
-    name: "Analysis",
-    icon: BarChart3,
-    children: [
-      { name: "Leads Analysis", icon: BarChart3, path: "/analysis/leads" },
-      { name: "Sales Analysis", icon: BarChart3, path: "/analysis/sales" }
-    ]
-  },
-  {
-    name: "Competitors",
-    icon: Building2,
-    children: [
-      { name: "Competitor List", icon: Building2, path: "/competitors" }
-    ]
-  },
-  {
-    name: "Partners",
-    icon: HandHeart,
-    children: [
-      { name: "Partner List", icon: HandHeart, path: "/partners" }
     ]
   },
   {
@@ -191,52 +151,71 @@ export const CRMSidebar: React.FC<CRMSidebarProps> = ({ isOpen, onToggle }) => {
           <div className="space-y-1">
             {menuItems.map((item) => (
               <div key={item.name}>
-                <Collapsible 
-                  open={isMenuOpen(item.name)}
-                  onOpenChange={() => toggleMenu(item.name)}
-                >
-                  <CollapsibleTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className={cn(
-                        "w-full justify-between text-left font-normal h-9",
-                        "hover:bg-sidebar-hover text-sidebar-foreground",
-                        isMenuOpen(item.name) && "bg-sidebar-active text-primary font-medium"
-                      )}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <item.icon className="w-4 h-4" />
-                        <span className="text-sm">{item.name}</span>
-                      </div>
-                      {isMenuOpen(item.name) ? (
-                        <ChevronDown className="w-4 h-4" />
-                      ) : (
-                        <ChevronRight className="w-4 h-4" />
-                      )}
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className="space-y-1 ml-4 mt-1">
-                    {item.children?.map((child) => (
-                      <NavLink
-                        key={child.name}
-                        to={child.path || "#"}
-                        className={({ isActive }) => cn(
-                          "flex items-center space-x-3 px-3 py-2 text-sm rounded-md transition-colors",
+                {item.path ? (
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) => cn(
+                      "flex items-center space-x-3 px-3 py-2 text-sm rounded-md transition-colors",
+                      "hover:bg-sidebar-hover text-sidebar-foreground",
+                      isActive && "bg-primary text-primary-foreground font-medium shadow-sm"
+                    )}
+                    onClick={() => {
+                      if (window.innerWidth < 1024) {
+                        onToggle();
+                      }
+                    }}
+                  >
+                    <item.icon className="w-4 h-4" />
+                    <span>{item.name}</span>
+                  </NavLink>
+                ) : (
+                  <Collapsible 
+                    open={isMenuOpen(item.name)}
+                    onOpenChange={() => toggleMenu(item.name)}
+                  >
+                    <CollapsibleTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className={cn(
+                          "w-full justify-between text-left font-normal h-9",
                           "hover:bg-sidebar-hover text-sidebar-foreground",
-                          isActive && "bg-primary text-primary-foreground font-medium shadow-sm"
+                          isMenuOpen(item.name) && "bg-sidebar-active text-primary font-medium"
                         )}
-                        onClick={() => {
-                          if (window.innerWidth < 1024) {
-                            onToggle();
-                          }
-                        }}
                       >
-                        <child.icon className="w-4 h-4" />
-                        <span>{child.name}</span>
-                      </NavLink>
-                    ))}
-                  </CollapsibleContent>
-                </Collapsible>
+                        <div className="flex items-center space-x-3">
+                          <item.icon className="w-4 h-4" />
+                          <span className="text-sm">{item.name}</span>
+                        </div>
+                        {isMenuOpen(item.name) ? (
+                          <ChevronDown className="w-4 h-4" />
+                        ) : (
+                          <ChevronRight className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="space-y-1 ml-4 mt-1">
+                      {item.children?.map((child) => (
+                        <NavLink
+                          key={child.name}
+                          to={child.path || "#"}
+                          className={({ isActive }) => cn(
+                            "flex items-center space-x-3 px-3 py-2 text-sm rounded-md transition-colors",
+                            "hover:bg-sidebar-hover text-sidebar-foreground",
+                            isActive && "bg-primary text-primary-foreground font-medium shadow-sm"
+                          )}
+                          onClick={() => {
+                            if (window.innerWidth < 1024) {
+                              onToggle();
+                            }
+                          }}
+                        >
+                          <child.icon className="w-4 h-4" />
+                          <span>{child.name}</span>
+                        </NavLink>
+                      ))}
+                    </CollapsibleContent>
+                  </Collapsible>
+                )}
               </div>
             ))}
           </div>

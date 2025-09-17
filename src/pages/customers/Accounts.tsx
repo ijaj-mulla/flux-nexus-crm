@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CRMToolbar } from "@/components/layout/CRMToolbar";
 import { FormCard } from "@/components/forms/FormCard";
 import { FormSection } from "@/components/forms/FormSection";
@@ -7,206 +7,336 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+
+// Sample data for accounts
+const sampleAccounts = [
+  {
+    id: 1,
+    accountName: "TechCorp Solutions",
+    accountType: "Customer",
+    website: "www.techcorp.com",
+    industryHorizontal: "Technology",
+    city: "San Francisco",
+    country: "United States",
+    owner: "John Smith",
+    status: "Active"
+  },
+  {
+    id: 2,
+    accountName: "Global Manufacturing Ltd",
+    accountType: "Prospect",
+    website: "www.globalmfg.com",
+    industryHorizontal: "Manufacturing",
+    city: "Detroit",
+    country: "United States",
+    owner: "Sarah Johnson",
+    status: "Prospect"
+  },
+  {
+    id: 3,
+    accountName: "Digital Marketing Agency",
+    accountType: "Partner",
+    website: "www.digitalagency.com",
+    industryHorizontal: "Marketing",
+    city: "New York",
+    country: "United States",
+    owner: "Mike Wilson",
+    status: "Active"
+  },
+  {
+    id: 4,
+    accountName: "Healthcare Systems Inc",
+    accountType: "Customer",
+    website: "www.healthsystems.com",
+    industryHorizontal: "Healthcare",
+    city: "Boston",
+    country: "United States",
+    owner: "Emily Davis",
+    status: "Active"
+  },
+  {
+    id: 5,
+    accountName: "Financial Services Group",
+    accountType: "Prospect",
+    website: "www.finservices.com",
+    industryHorizontal: "Finance",
+    city: "Chicago",
+    country: "United States",
+    owner: "David Brown",
+    status: "Prospect"
+  }
+];
 
 const Accounts = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [accounts, setAccounts] = useState(sampleAccounts);
+
+  const handleToolbarAction = (action: string) => {
+    if (action === 'add-new') {
+      setShowForm(true);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission here
+    setShowForm(false);
+  };
+
+  const getStatusBadge = (status: string) => {
+    const variant = status === "Active" ? "default" : status === "Prospect" ? "secondary" : "outline";
+    return <Badge variant={variant}>{status}</Badge>;
+  };
+
+  if (showForm) {
+    return (
+      <div className="min-h-screen bg-background">
+        <CRMToolbar title="Accounts - New Account" onAction={handleToolbarAction} />
+        
+        <div className="p-6">
+          <FormCard title="Account Information">
+            <FormSection title="Account Information">
+              <div className="space-y-2">
+                <Label htmlFor="accountId">Account ID</Label>
+                <Input id="accountId" placeholder="Enter account ID" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="accountType">Account Type</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select account type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="prospect">Prospect</SelectItem>
+                    <SelectItem value="customer">Customer</SelectItem>
+                    <SelectItem value="partner">Partner</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="accountName">Account Name</Label>
+                <Input id="accountName" placeholder="Enter account name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="additionalName">Additional Name</Label>
+                <Input id="additionalName" placeholder="Enter additional name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="prospectRole">Prospect Role</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select prospect role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="decision-maker">Decision Maker</SelectItem>
+                    <SelectItem value="influencer">Influencer</SelectItem>
+                    <SelectItem value="user">User</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="website">Website</Label>
+                <Input id="website" placeholder="Enter website URL" />
+              </div>
+            </FormSection>
+
+            <FormSection title="Sales & Business Details">
+              <div className="space-y-2">
+                <Label htmlFor="salesOrg">Sales Organization</Label>
+                <Input id="salesOrg" placeholder="Enter sales organization" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="buAssignment">BU Assignment</Label>
+                <Input id="buAssignment" placeholder="Enter BU assignment" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="industryHorizontal">Industry Categories (Horizontal)</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select horizontal category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="technology">Technology</SelectItem>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="industryVertical">Vertical</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select vertical category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="software">Software</SelectItem>
+                    <SelectItem value="hardware">Hardware</SelectItem>
+                    <SelectItem value="services">Services</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="subVertical">Sub Vertical</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select sub vertical" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="enterprise">Enterprise</SelectItem>
+                    <SelectItem value="smb">SMB</SelectItem>
+                    <SelectItem value="startup">Startup</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </FormSection>
+
+            <FormSection title="Location Details">
+              <div className="space-y-2">
+                <Label htmlFor="country">Country/Region</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select country/region" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="us">United States</SelectItem>
+                    <SelectItem value="uk">United Kingdom</SelectItem>
+                    <SelectItem value="ca">Canada</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="postalCode">Postal Code</Label>
+                <Input id="postalCode" placeholder="Enter postal code" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="city">City</Label>
+                <Input id="city" placeholder="Enter city" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="state">State</Label>
+                <Input id="state" placeholder="Enter state" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="district">District</Label>
+                <Input id="district" placeholder="Enter district" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="street">Street</Label>
+                <Input id="street" placeholder="Enter street address" />
+              </div>
+            </FormSection>
+
+            <FormSection title="Territory Management">
+              <div className="space-y-2">
+                <Label htmlFor="overrideTerritory">Override Territory</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select override territory" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">Yes</SelectItem>
+                    <SelectItem value="no">No</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="territory">Territory</Label>
+                <Input id="territory" placeholder="Enter territory" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="owner">Owner</Label>
+                <Input id="owner" placeholder="Enter owner" />
+              </div>
+            </FormSection>
+
+            <FormSection title="Tax Information">
+              <div className="space-y-2">
+                <Label htmlFor="taxCountry">Tax Country/Region</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select tax country/region" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="us">United States</SelectItem>
+                    <SelectItem value="uk">United Kingdom</SelectItem>
+                    <SelectItem value="ca">Canada</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="taxNumberType">Tax Number Type</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select tax number type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ein">EIN</SelectItem>
+                    <SelectItem value="vat">VAT</SelectItem>
+                    <SelectItem value="gstin">GSTIN</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="taxNumber">Tax Number</Label>
+                <Input id="taxNumber" placeholder="Enter tax number" />
+              </div>
+            </FormSection>
+
+            <div className="flex justify-end space-x-4 pt-6 border-t border-border">
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+              <Button onClick={handleSubmit}>Save Account</Button>
+            </div>
+          </FormCard>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <CRMToolbar title="Accounts" />
+      <CRMToolbar title="Accounts" onAction={handleToolbarAction} />
       
       <div className="p-6">
-        <FormCard title="Account Information">
-          <FormSection title="Account Information">
-            <div className="space-y-2">
-              <Label htmlFor="accountId">Account ID</Label>
-              <Input id="accountId" placeholder="Enter account ID" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="accountType">Account Type</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select account type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="prospect">Prospect</SelectItem>
-                  <SelectItem value="customer">Customer</SelectItem>
-                  <SelectItem value="partner">Partner</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="accountName">Account Name</Label>
-              <Input id="accountName" placeholder="Enter account name" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="additionalName">Additional Name</Label>
-              <Input id="additionalName" placeholder="Enter additional name" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="prospectRole">Prospect Role</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select prospect role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="decision-maker">Decision Maker</SelectItem>
-                  <SelectItem value="influencer">Influencer</SelectItem>
-                  <SelectItem value="user">User</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="website">Website</Label>
-              <Input id="website" placeholder="Enter website URL" />
-            </div>
-          </FormSection>
-
-          <FormSection title="Sales & Business Details">
-            <div className="space-y-2">
-              <Label htmlFor="salesOrg">Sales Organization</Label>
-              <Input id="salesOrg" placeholder="Enter sales organization" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="buAssignment">BU Assignment</Label>
-              <Input id="buAssignment" placeholder="Enter BU assignment" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="industryHorizontal">Industry Categories (Horizontal)</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select horizontal category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="technology">Technology</SelectItem>
-                  <SelectItem value="healthcare">Healthcare</SelectItem>
-                  <SelectItem value="finance">Finance</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="industryVertical">Vertical</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select vertical category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="software">Software</SelectItem>
-                  <SelectItem value="hardware">Hardware</SelectItem>
-                  <SelectItem value="services">Services</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="subVertical">Sub Vertical</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select sub vertical" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="enterprise">Enterprise</SelectItem>
-                  <SelectItem value="smb">SMB</SelectItem>
-                  <SelectItem value="startup">Startup</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </FormSection>
-
-          <FormSection title="Location Details">
-            <div className="space-y-2">
-              <Label htmlFor="country">Country/Region</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select country/region" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="us">United States</SelectItem>
-                  <SelectItem value="uk">United Kingdom</SelectItem>
-                  <SelectItem value="ca">Canada</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="postalCode">Postal Code</Label>
-              <Input id="postalCode" placeholder="Enter postal code" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="city">City</Label>
-              <Input id="city" placeholder="Enter city" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="state">State</Label>
-              <Input id="state" placeholder="Enter state" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="district">District</Label>
-              <Input id="district" placeholder="Enter district" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="street">Street</Label>
-              <Input id="street" placeholder="Enter street address" />
-            </div>
-          </FormSection>
-
-          <FormSection title="Territory Management">
-            <div className="space-y-2">
-              <Label htmlFor="overrideTerritory">Override Territory</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select override territory" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="territory">Territory</Label>
-              <Input id="territory" placeholder="Enter territory" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="owner">Owner</Label>
-              <Input id="owner" placeholder="Enter owner" />
-            </div>
-          </FormSection>
-
-          <FormSection title="Tax Information">
-            <div className="space-y-2">
-              <Label htmlFor="taxCountry">Tax Country/Region</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select tax country/region" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="us">United States</SelectItem>
-                  <SelectItem value="uk">United Kingdom</SelectItem>
-                  <SelectItem value="ca">Canada</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="taxNumberType">Tax Number Type</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select tax number type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ein">EIN</SelectItem>
-                  <SelectItem value="vat">VAT</SelectItem>
-                  <SelectItem value="gstin">GSTIN</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="taxNumber">Tax Number</Label>
-              <Input id="taxNumber" placeholder="Enter tax number" />
-            </div>
-          </FormSection>
-
-          <div className="flex justify-end space-x-4 pt-6 border-t border-border">
-            <Button variant="outline">Cancel</Button>
-            <Button>Save Account</Button>
-          </div>
-        </FormCard>
+        <Card className="shadow-soft">
+          <CardHeader>
+            <CardTitle>Accounts</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Account Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Industry</TableHead>
+                  <TableHead>Location</TableHead>
+                  <TableHead>Website</TableHead>
+                  <TableHead>Owner</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {accounts.map((account) => (
+                  <TableRow key={account.id} className="cursor-pointer hover:bg-muted/50">
+                    <TableCell className="font-medium">{account.accountName}</TableCell>
+                    <TableCell>{account.accountType}</TableCell>
+                    <TableCell>{account.industryHorizontal}</TableCell>
+                    <TableCell>{account.city}, {account.country}</TableCell>
+                    <TableCell>
+                      <a href={`https://${account.website}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        {account.website}
+                      </a>
+                    </TableCell>
+                    <TableCell>{account.owner}</TableCell>
+                    <TableCell>{getStatusBadge(account.status)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
