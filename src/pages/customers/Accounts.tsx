@@ -308,14 +308,30 @@ const Accounts = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Account Name</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Industry</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Website</TableHead>
-                  <TableHead>Owner</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
+  <TableHead>Account ID</TableHead>
+  <TableHead>Account Type</TableHead>
+  <TableHead>Account Name</TableHead>
+  <TableHead>Prospect Role</TableHead>
+  <TableHead>Website</TableHead>
+  <TableHead>Status</TableHead>
+  <TableHead>Sales Organization</TableHead>
+  <TableHead>BU Assignment</TableHead>
+  <TableHead>Industry Categories (Horizontal)</TableHead>
+  <TableHead>Vertical</TableHead>
+  <TableHead>Sub Vertical</TableHead>
+  <TableHead>Country/Region</TableHead>
+  <TableHead>Postal Code</TableHead>
+  <TableHead>City</TableHead>
+  <TableHead>State</TableHead>
+  <TableHead>District</TableHead>
+  <TableHead>Street</TableHead>
+  <TableHead>Territory</TableHead>
+  <TableHead>Owner</TableHead>
+  <TableHead>Tax Country/Region</TableHead>
+  <TableHead>Tax Number Type</TableHead>
+  <TableHead>Tax Number</TableHead>
+</TableRow>
+
               </TableHeader>
               <TableBody>
                 {accounts.map((account) => (
