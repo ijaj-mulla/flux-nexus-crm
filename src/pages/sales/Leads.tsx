@@ -277,17 +277,28 @@ const Leads = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Lead Name</TableHead>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Qualification</TableHead>
-                  <TableHead>Source</TableHead>
-                  <TableHead>Owner</TableHead>
-                </TableRow>
+  <TableHead>Name</TableHead>
+  <TableHead>Company</TableHead>
+  <TableHead>Contact Name</TableHead>
+  <TableHead>Status</TableHead>
+  <TableHead>Qualification Level</TableHead>
+  <TableHead>Source</TableHead>
+  <TableHead>Category</TableHead>
+  <TableHead>Priority</TableHead>
+  <TableHead>Campaign</TableHead>
+  <TableHead>Owner</TableHead>
+  <TableHead>Follow-up Activity</TableHead>
+  <TableHead>City</TableHead>
+  <TableHead>Country/Region</TableHead>
+  <TableHead>State</TableHead>
+  <TableHead>Postal Code</TableHead>
+  <TableHead>Language</TableHead>
+  <TableHead>Phone</TableHead>
+  <TableHead>Mobile</TableHead>
+  <TableHead>Email</TableHead>
+  <TableHead>Note</TableHead>
+</TableRow>
+
               </TableHeader>
               <TableBody>
                 {leads.map((lead) => (
