@@ -19,7 +19,7 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material';
-import { MUIToolbar } from '../../components/layout/MUIToolbar.jsx';
+import { MUIToolbar } from '../../components/layout/MUIToolbar';
 
 const MUIAccounts = () => {
   const theme = useTheme();
@@ -423,74 +423,35 @@ const MUIAccounts = () => {
       <MUIToolbar title="Accounts" onAction={handleToolbarAction} />
       
       <Box sx={{ p: 3 }}>
-        <Paper sx={{ 
-          borderRadius: 3,
-          overflow: 'hidden',
-          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-          border: '1px solid #e2e8f0'
-        }}>
+        <Paper>
           <TableContainer>
-            <Table sx={{ minWidth: 650 }}>
+            <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Account Name</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Account Type</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Industry</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Website</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Owner</TableCell>
+                   <TableCell>Account Name</TableCell>
+                   <TableCell>Account Type</TableCell>
+                   <TableCell>Industry</TableCell>
+                   <TableCell>Website</TableCell>
+                   <TableCell>Owner</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {accounts.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} align="center" sx={{ py: 8 }}>
-                      <Box sx={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center',
-                        gap: 2
-                      }}>
-                        <Business sx={{ fontSize: 48, color: 'grey.400' }} />
-                        <Typography variant="h6" color="textSecondary">
-                          No accounts found
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          Click the Add button to create your first account
-                        </Typography>
-                      </Box>
+                    <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                      <Typography color="textSecondary">
+                        No accounts found. Click the Add button to create your first account.
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 ) : (
-                  accounts.map((account, index) => (
-                    <TableRow 
-                      key={account.id}
-                      sx={{ 
-                        '&:hover': { 
-                          backgroundColor: '#f8fafc',
-                          transform: 'scale(1.001)',
-                          transition: 'all 0.2s'
-                        },
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <TableCell sx={{ fontWeight: 600 }}>{account.accountName}</TableCell>
-                      <TableCell>
-                        <Box sx={{
-                          display: 'inline-block',
-                          px: 2,
-                          py: 0.5,
-                          borderRadius: 20,
-                          backgroundColor: account.accountType === 'customer' ? '#e8f5e8' : '#fff3cd',
-                          color: account.accountType === 'customer' ? '#2e7d2e' : '#8a6d3b',
-                          fontSize: '0.75rem',
-                          fontWeight: 600
-                        }}>
-                          {account.accountType}
-                        </Box>
-                      </TableCell>
-                      <TableCell>{account.industryHorizontal}</TableCell>
-                      <TableCell sx={{ color: '#1976D2' }}>{account.website}</TableCell>
-                      <TableCell>{account.owner}</TableCell>
+                  accounts.map((account) => (
+                    <TableRow key={account.id}>
+                       <TableCell>{account.accountName}</TableCell>
+                       <TableCell>{account.accountType}</TableCell>
+                       <TableCell>{account.industryHorizontal}</TableCell>
+                       <TableCell>{account.website}</TableCell>
+                       <TableCell>{account.owner}</TableCell>
                     </TableRow>
                   ))
                 )}

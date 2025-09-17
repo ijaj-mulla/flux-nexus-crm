@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { theme } from './theme/theme';
-import { MUILayout } from './components/layout/MUILayout.jsx';
-import MUIAccounts from './pages/customers/MUIAccounts.jsx';
-import MUIContacts from './pages/customers/MUIContacts.jsx';
-import MUILeads from './pages/sales/MUILeads.jsx';
+import { MUILayout } from './components/layout/MUILayout';
+import MUIAccounts from './pages/customers/MUIAccounts';
+import MUIContacts from './pages/customers/MUIContacts';
+import MUILeads from './pages/sales/MUILeads';
 
 function App() {
   return (

@@ -14,7 +14,7 @@ import {
   TableRow,
   useTheme
 } from '@mui/material';
-import { MUIToolbar } from '../../components/layout/MUIToolbar.jsx';
+import { MUIToolbar } from '../../components/layout/MUIToolbar';
 
 const MUIContacts = () => {
   const theme = useTheme();
@@ -163,74 +163,35 @@ const MUIContacts = () => {
       <MUIToolbar title="Contacts" onAction={handleToolbarAction} />
       
       <Box sx={{ p: 3 }}>
-        <Paper sx={{ 
-          borderRadius: 3,
-          overflow: 'hidden',
-          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-          border: '1px solid #e2e8f0'
-        }}>
+        <Paper>
           <TableContainer>
-            <Table sx={{ minWidth: 650 }}>
+            <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Name</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Email</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Phone</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Mobile</TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: '0.875rem' }}>Role</TableCell>
+                   <TableCell>Name</TableCell>
+                   <TableCell>Email</TableCell>
+                   <TableCell>Phone</TableCell>
+                   <TableCell>Mobile</TableCell>
+                   <TableCell>Role</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {contacts.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} align="center" sx={{ py: 8 }}>
-                      <Box sx={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center',
-                        gap: 2
-                      }}>
-                        <Contacts sx={{ fontSize: 48, color: 'grey.400' }} />
-                        <Typography variant="h6" color="textSecondary">
-                          No contacts found
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          Click the Add button to create your first contact
-                        </Typography>
-                      </Box>
+                    <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                      <Typography color="textSecondary">
+                        No contacts found. Click the Add button to create your first contact.
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 ) : (
-                  contacts.map((contact, index) => (
-                    <TableRow 
-                      key={contact.id}
-                      sx={{ 
-                        '&:hover': { 
-                          backgroundColor: '#f8fafc',
-                          transform: 'scale(1.001)',
-                          transition: 'all 0.2s'
-                        },
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <TableCell sx={{ fontWeight: 600 }}>{contact.name}</TableCell>
-                      <TableCell>{contact.email}</TableCell>
-                      <TableCell>{contact.phone}</TableCell>
-                      <TableCell>{contact.mobile}</TableCell>
-                      <TableCell>
-                        <Box sx={{
-                          display: 'inline-block',
-                          px: 2,
-                          py: 0.5,
-                          borderRadius: 20,
-                          backgroundColor: '#e0f2fe',
-                          color: '#004B87',
-                          fontSize: '0.75rem',
-                          fontWeight: 600
-                        }}>
-                          {contact.role}
-                        </Box>
-                      </TableCell>
+                  contacts.map((contact) => (
+                    <TableRow key={contact.id}>
+                       <TableCell>{contact.name}</TableCell>
+                       <TableCell>{contact.email}</TableCell>
+                       <TableCell>{contact.phone}</TableCell>
+                       <TableCell>{contact.mobile}</TableCell>
+                       <TableCell>{contact.role}</TableCell>
                     </TableRow>
                   ))
                 )}

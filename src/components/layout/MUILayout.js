@@ -9,7 +9,7 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { Menu } from '@mui/icons-material';
-import { MUISidebar } from './MUISidebar.jsx';
+import { MUISidebar } from './MUISidebar';
 
 export const MUILayout = ({ children }) => {
   const theme = useTheme();

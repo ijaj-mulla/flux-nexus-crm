@@ -15,22 +15,25 @@ import {
 } from '@mui/material';
 import {
   Home,
-  DashboardCustomize,
-  CalendarMonth,
+  Dashboard,
+  CalendarToday,
+  Feed,
   People,
   Business,
-  Contacts,
+  ContactPhone,
   TrendingUp,
-  PersonAdd,
+  Person,
   Assignment,
+  Inventory,
+  Analytics,
+  CompareArrows,
+  Handshake,
   VisibilityOutlined,
-  Extension,
+  Integration,
   Settings,
   ExpandLess,
   ExpandMore,
-  ChevronLeft,
-  Email,
-  Task
+  ChevronLeft
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -66,15 +69,15 @@ export const MUISidebar = ({ open, onClose }) => {
 
   const menuItems = [
     { label: 'Home', icon: <Home />, path: '/' },
-    { label: 'Dashboard', icon: <DashboardCustomize />, path: '/dashboard' },
-    { label: 'Calendar', icon: <CalendarMonth />, path: '/calendar' },
+    { label: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
+    { label: 'Calendar', icon: <CalendarToday />, path: '/calendar' },
     {
       label: 'Customers',
       icon: <People />,
       expandKey: 'customers',
       children: [
         { label: 'Accounts', icon: <Business />, path: '/customers/accounts' },
-        { label: 'Contacts', icon: <Contacts />, path: '/customers/contacts' },
+        { label: 'Contacts', icon: <ContactPhone />, path: '/customers/contacts' },
         { label: 'Account Hierarchy', icon: <TrendingUp />, path: '/customers/hierarchy' }
       ]
     },
@@ -83,7 +86,7 @@ export const MUISidebar = ({ open, onClose }) => {
       icon: <TrendingUp />,
       expandKey: 'sales',
       children: [
-        { label: 'Leads', icon: <PersonAdd />, path: '/sales/leads' },
+        { label: 'Leads', icon: <Person />, path: '/sales/leads' },
         { label: 'Opportunities', icon: <Assignment />, path: '/sales/opportunities' },
         { label: 'Sales Quotes', icon: <Assignment />, path: '/sales/quotes' },
         { label: 'Sales Orders', icon: <Assignment />, path: '/sales/orders' }
@@ -91,22 +94,22 @@ export const MUISidebar = ({ open, onClose }) => {
     },
     {
       label: 'Activities',
-      icon: <Task />,
+      icon: <Assignment />,
       expandKey: 'activities',
       children: [
-        { label: 'Appointments', icon: <CalendarMonth />, path: '/activities/appointments' },
-        { label: 'E-Mails', icon: <Email />, path: '/activities/emails' },
-        { label: 'Tasks', icon: <Task />, path: '/activities/tasks' }
+        { label: 'Appointments', icon: <CalendarToday />, path: '/activities/appointments' },
+        { label: 'E-Mails', icon: <Feed />, path: '/activities/emails' },
+        { label: 'Tasks', icon: <Assignment />, path: '/activities/tasks' }
       ]
     },
     { label: 'Visits', icon: <VisibilityOutlined />, path: '/visits' },
     {
       label: 'Integrations',
-      icon: <Extension />,
+      icon: <Integration />,
       expandKey: 'integrations',
       children: [
-        { label: 'Email Integration', icon: <Email />, path: '/integrations/email' },
-        { label: 'Google Leads Integration', icon: <Extension />, path: '/integrations/google' }
+        { label: 'Email Integration', icon: <Feed />, path: '/integrations/email' },
+        { label: 'Google Leads Integration', icon: <Integration />, path: '/integrations/google' }
       ]
     },
     { label: 'Admin / Settings', icon: <Settings />, path: '/admin' }
@@ -124,26 +127,17 @@ export const MUISidebar = ({ open, onClose }) => {
             onClick={hasChildren ? () => toggleExpanded(item.expandKey) : () => handleNavigation(item.path)}
             selected={isActive}
             sx={{
-              borderRadius: 2,
+              borderRadius: 1,
               mx: 1,
-              my: 0.5,
-              transition: 'all 0.2s ease',
               '&.Mui-selected': {
-                background: 'linear-gradient(135deg, #004B87 0%, #1976D2 100%)',
+                backgroundColor: theme.palette.primary.main,
                 color: 'white',
-                boxShadow: '0 4px 12px rgba(0, 75, 135, 0.3)',
-                transform: 'translateX(4px)',
                 '& .MuiListItemIcon-root': {
                   color: 'white',
                 },
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #003366 0%, #1565C0 100%)',
-                  transform: 'translateX(6px)',
+                  backgroundColor: theme.palette.primary.dark,
                 },
-              },
-              '&:hover': {
-                backgroundColor: 'rgba(25, 118, 210, 0.08)',
-                transform: 'translateX(2px)',
               },
             }}
           >
@@ -172,20 +166,14 @@ export const MUISidebar = ({ open, onClose }) => {
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'space-between',
-        padding: theme.spacing(3),
-        background: 'linear-gradient(135deg, #004B87 0%, #1976D2 100%)',
-        color: 'white'
+        padding: theme.spacing(2),
+        borderBottom: `1px solid ${theme.palette.divider}`
       }}>
-        <Typography variant="h5" fontWeight="bold" sx={{ 
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1
-        }}>
-          <Business sx={{ fontSize: 28 }} />
+        <Typography variant="h6" color="primary" fontWeight="bold">
           CRM Pro
         </Typography>
         {isMobile && (
-          <IconButton onClick={onClose} sx={{ color: 'white' }}>
+          <IconButton onClick={onClose}>
             <ChevronLeft />
           </IconButton>
         )}
