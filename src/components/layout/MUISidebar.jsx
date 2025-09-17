@@ -29,7 +29,7 @@ import {
   CompareArrows,
   Handshake,
   VisibilityOutlined,
-  Integration,
+  Extension,
   Settings,
   ExpandLess,
   ExpandMore,
@@ -105,11 +105,11 @@ export const MUISidebar = ({ open, onClose }) => {
     { label: 'Visits', icon: <VisibilityOutlined />, path: '/visits' },
     {
       label: 'Integrations',
-      icon: <Integration />,
+      icon: <Extension />,
       expandKey: 'integrations',
       children: [
         { label: 'Email Integration', icon: <Feed />, path: '/integrations/email' },
-        { label: 'Google Leads Integration', icon: <Integration />, path: '/integrations/google' }
+        { label: 'Google Leads Integration', icon: <Extension />, path: '/integrations/google' }
       ]
     },
     { label: 'Admin / Settings', icon: <Settings />, path: '/admin' }
