@@ -21,21 +21,11 @@ const sampleLeads = [
     contactLastName: "Johnson",
     email: "alex.johnson@techstart.com",
     phone: "+1 (555) 111-2222",
-    mobile: "+1 (555) 121-3434",
     status: "In Process",
     priority: "High",
     qualificationLevel: "Hot",
     source: "Website",
-    category: "Software",
-    campaign: "Spring 2025 Campaign",
-    owner: "John Smith",
-    followUpActivity: "Schedule demo",
-    city: "San Francisco",
-    country: "United States",
-    state: "California",
-    postalCode: "94105",
-    language: "English",
-    notes: "Very interested in early adoption."
+    owner: "John Smith"
   },
   {
     id: 2,
@@ -45,21 +35,11 @@ const sampleLeads = [
     contactLastName: "Garcia",
     email: "maria.garcia@legacy.com",
     phone: "+1 (555) 333-4444",
-    mobile: "+1 (555) 232-4545",
     status: "Qualified",
     priority: "Medium",
     qualificationLevel: "Warm",
     source: "Referral",
-    category: "Cloud",
-    campaign: "Q2 Cloud Push",
-    owner: "Sarah Johnson",
-    followUpActivity: "Send proposal",
-    city: "Detroit",
-    country: "United States",
-    state: "Michigan",
-    postalCode: "48201",
-    language: "English",
-    notes: "Strong interest, needs detailed cost analysis."
+    owner: "Sarah Johnson"
   },
   {
     id: 3,
@@ -69,21 +49,11 @@ const sampleLeads = [
     contactLastName: "Chen",
     email: "robert.chen@traditional.com",
     phone: "+1 (555) 555-6666",
-    mobile: "+1 (555) 656-7878",
     status: "In Process",
     priority: "High",
     qualificationLevel: "Hot",
     source: "Trade Show",
-    category: "Transformation",
-    campaign: "Tech Expo 2025",
-    owner: "Mike Wilson",
-    followUpActivity: "Book workshop",
-    city: "New York",
-    country: "United States",
-    state: "New York",
-    postalCode: "10001",
-    language: "English",
-    notes: "Large deal, requires multiple follow-ups."
+    owner: "Mike Wilson"
   },
   {
     id: 4,
@@ -93,21 +63,11 @@ const sampleLeads = [
     contactLastName: "Thompson",
     email: "lisa.thompson@growing.com",
     phone: "+1 (555) 777-8888",
-    mobile: "+1 (555) 787-9090",
     status: "In Process",
     priority: "Low",
     qualificationLevel: "Cold",
     source: "Cold Call",
-    category: "CRM",
-    campaign: "Startup Outreach",
-    owner: "Emily Davis",
-    followUpActivity: "Follow-up in 2 weeks",
-    city: "Boston",
-    country: "United States",
-    state: "Massachusetts",
-    postalCode: "02108",
-    language: "English",
-    notes: "Budget constraints, low priority."
+    owner: "Emily Davis"
   },
   {
     id: 5,
@@ -117,21 +77,11 @@ const sampleLeads = [
     contactLastName: "Wilson",
     email: "james.wilson@analyticspro.com",
     phone: "+1 (555) 999-0000",
-    mobile: "+1 (555) 909-1111",
     status: "Qualified",
     priority: "Medium",
     qualificationLevel: "Warm",
     source: "LinkedIn",
-    category: "Analytics",
-    campaign: "Data Summit 2025",
-    owner: "David Brown",
-    followUpActivity: "Arrange reference call",
-    city: "Chicago",
-    country: "United States",
-    state: "Illinois",
-    postalCode: "60601",
-    language: "English",
-    notes: "Interested, waiting for CIO approval."
+    owner: "David Brown"
   }
 ];
 
@@ -140,13 +90,14 @@ const Leads = () => {
   const [leads, setLeads] = useState(sampleLeads);
 
   const handleToolbarAction = (action: string) => {
-    if (action === "add-new") {
+    if (action === 'add-new') {
       setShowForm(true);
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Handle form submission here
     setShowForm(false);
   };
 
@@ -156,14 +107,12 @@ const Leads = () => {
   };
 
   const getPriorityBadge = (priority: string) => {
-    const variant =
-      priority === "High" ? "destructive" : priority === "Medium" ? "default" : "outline";
+    const variant = priority === "High" ? "destructive" : priority === "Medium" ? "default" : "outline";
     return <Badge variant={variant}>{priority}</Badge>;
   };
 
   const getQualificationBadge = (level: string) => {
-    const variant =
-      level === "Hot" ? "destructive" : level === "Warm" ? "default" : "outline";
+    const variant = level === "Hot" ? "destructive" : level === "Warm" ? "default" : "outline";
     return <Badge variant={variant}>{level}</Badge>;
   };
 
@@ -171,7 +120,146 @@ const Leads = () => {
     return (
       <div className="min-h-screen bg-background">
         <CRMToolbar title="Leads - New Lead" onAction={handleToolbarAction} />
-        {/* --- Form remains same as your code --- */}
+        
+        <div className="p-6">
+          <FormCard title="Lead Information">
+            <FormSection title="General Details">
+              <div className="space-y-2">
+                <Label htmlFor="leadName">Name</Label>
+                <Input id="leadName" placeholder="Enter lead name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="company">Company</Label>
+                <Input id="company" placeholder="Enter company name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="contactFirstName">Contact First Name</Label>
+                <Input id="contactFirstName" placeholder="Enter first name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="contactLastName">Contact Last Name</Label>
+                <Input id="contactLastName" placeholder="Enter last name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="status">Status</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="in-process">In Process</SelectItem>
+                    <SelectItem value="qualified">Qualified</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="qualificationLevel">Qualification Level</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select qualification level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cold">Cold</SelectItem>
+                    <SelectItem value="warm">Warm</SelectItem>
+                    <SelectItem value="hot">Hot</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="source">Source</Label>
+                <Input id="source" placeholder="Enter lead source" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="category">Category</Label>
+                <Input id="category" placeholder="Enter category" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="priority">Priority</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="campaign">Campaign</Label>
+                <Input id="campaign" placeholder="Enter campaign" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="owner">Owner</Label>
+                <Input id="owner" placeholder="Enter owner" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="followUpActivity">Follow-up Activity</Label>
+                <Input id="followUpActivity" placeholder="Enter follow-up activity" />
+              </div>
+            </FormSection>
+
+            <FormSection title="Account Information">
+              <div className="space-y-2">
+                <Label htmlFor="city">City</Label>
+                <Input id="city" placeholder="Enter city" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="country">Country/Region</Label>
+                <Input id="country" placeholder="Enter country/region" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="state">State</Label>
+                <Input id="state" placeholder="Enter state" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="postalCode">Postal Code</Label>
+                <Input id="postalCode" placeholder="Enter postal code" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="language">Language</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="es">Spanish</SelectItem>
+                    <SelectItem value="fr">French</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </FormSection>
+
+            <FormSection title="Contact Information">
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone</Label>
+                <Input id="phone" placeholder="Enter phone number" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mobile">Mobile</Label>
+                <Input id="mobile" placeholder="Enter mobile number" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" placeholder="Enter email address" />
+              </div>
+            </FormSection>
+
+            <FormSection title="Notes">
+              <div className="space-y-2 lg:col-span-2">
+                <Label htmlFor="notes">Notes</Label>
+                <Textarea id="notes" placeholder="Enter notes" rows={4} />
+              </div>
+            </FormSection>
+
+            <div className="flex justify-end space-x-4 pt-6 border-t border-border">
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+              <Button onClick={handleSubmit}>Save Lead</Button>
+            </div>
+          </FormCard>
+        </div>
       </div>
     );
   }
@@ -179,6 +267,7 @@ const Leads = () => {
   return (
     <div className="min-h-screen bg-background">
       <CRMToolbar title="Leads" onAction={handleToolbarAction} />
+      
       <div className="p-6">
         <Card className="shadow-soft">
           <CardHeader>
@@ -188,26 +277,16 @@ const Leads = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
+                  <TableHead>Lead Name</TableHead>
                   <TableHead>Company</TableHead>
-                  <TableHead>Contact Name</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Qualification Level</TableHead>
-                  <TableHead>Source</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Campaign</TableHead>
-                  <TableHead>Owner</TableHead>
-                  <TableHead>Follow-up Activity</TableHead>
-                  <TableHead>City</TableHead>
-                  <TableHead>Country/Region</TableHead>
-                  <TableHead>State</TableHead>
-                  <TableHead>Postal Code</TableHead>
-                  <TableHead>Language</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Mobile</TableHead>
+                  <TableHead>Contact</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead>Notes</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Priority</TableHead>
+                  <TableHead>Qualification</TableHead>
+                  <TableHead>Source</TableHead>
+                  <TableHead>Owner</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -216,27 +295,17 @@ const Leads = () => {
                     <TableCell className="font-medium">{lead.name}</TableCell>
                     <TableCell>{lead.company}</TableCell>
                     <TableCell>{lead.contactFirstName} {lead.contactLastName}</TableCell>
-                    <TableCell>{getStatusBadge(lead.status)}</TableCell>
-                    <TableCell>{getQualificationBadge(lead.qualificationLevel)}</TableCell>
-                    <TableCell>{lead.source}</TableCell>
-                    <TableCell>{lead.category}</TableCell>
-                    <TableCell>{getPriorityBadge(lead.priority)}</TableCell>
-                    <TableCell>{lead.campaign}</TableCell>
-                    <TableCell>{lead.owner}</TableCell>
-                    <TableCell>{lead.followUpActivity}</TableCell>
-                    <TableCell>{lead.city}</TableCell>
-                    <TableCell>{lead.country}</TableCell>
-                    <TableCell>{lead.state}</TableCell>
-                    <TableCell>{lead.postalCode}</TableCell>
-                    <TableCell>{lead.language}</TableCell>
-                    <TableCell>{lead.phone}</TableCell>
-                    <TableCell>{lead.mobile}</TableCell>
                     <TableCell>
                       <a href={`mailto:${lead.email}`} className="text-primary hover:underline">
                         {lead.email}
                       </a>
                     </TableCell>
-                    <TableCell>{lead.notes}</TableCell>
+                    <TableCell>{lead.phone}</TableCell>
+                    <TableCell>{getStatusBadge(lead.status)}</TableCell>
+                    <TableCell>{getPriorityBadge(lead.priority)}</TableCell>
+                    <TableCell>{getQualificationBadge(lead.qualificationLevel)}</TableCell>
+                    <TableCell>{lead.source}</TableCell>
+                    <TableCell>{lead.owner}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
