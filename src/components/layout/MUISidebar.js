@@ -170,7 +170,7 @@ export const MUISidebar = ({ open, onClose }) => {
         borderBottom: `1px solid ${theme.palette.divider}`
       }}>
         <Typography variant="h6" color="primary" fontWeight="bold">
-          CRM Pro
+          CRM
         </Typography>
         {isMobile && (
           <IconButton onClick={onClose}>
