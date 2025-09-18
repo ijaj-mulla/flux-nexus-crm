@@ -361,10 +361,9 @@ const Leads = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="overflow-y-auto overflow-x-hidden max-h-[600px] w-full">
-              <div className="min-w-max">
-                <Table className="table-fixed w-full">
-                  <TableHeader className="sticky top-0 bg-background z-10">
+            <div className="overflow-auto max-h-[600px]">
+              <Table>
+                <TableHeader className="sticky top-0 bg-background">
                   <TableRow>
                     <TableHead className="cursor-pointer" onClick={() => handleSort('name')}>Name</TableHead>
                     <TableHead className="cursor-pointer" onClick={() => handleSort('company')}>Company</TableHead>
@@ -408,8 +407,7 @@ const Leads = () => {
                     </TableRow>
                   ))}
                 </TableBody>
-                </Table>
-              </div>
+              </Table>
             </div>
             
             {/* Pagination */}

@@ -416,10 +416,9 @@ const Accounts = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="overflow-y-auto overflow-x-hidden max-h-[600px] w-full">
-              <div className="min-w-max">
-                <Table className="table-fixed w-full">
-                  <TableHeader className="sticky top-0 bg-background z-10">
+            <div className="overflow-auto max-h-[600px]">
+              <Table>
+                <TableHeader className="sticky top-0 bg-background">
                   <TableRow>
                     <TableHead className="cursor-pointer" onClick={() => handleSort('accountId')}>Account ID</TableHead>
                     <TableHead className="cursor-pointer" onClick={() => handleSort('accountType')}>Type</TableHead>
@@ -465,8 +464,7 @@ const Accounts = () => {
                     </TableRow>
                   ))}
                 </TableBody>
-                </Table>
-              </div>
+              </Table>
             </div>
             
             {/* Pagination */}
