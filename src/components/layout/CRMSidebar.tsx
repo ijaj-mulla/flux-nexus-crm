@@ -134,7 +134,7 @@ export const CRMSidebar: React.FC<CRMSidebarProps> = ({ isOpen, onToggle }) => {
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
               <Building2 className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-semibold text-foreground">CRM Pro</span>
+            <span className="text-lg font-semibold text-foreground">CRM</span>
           </div>
           <Button
             variant="ghost"
