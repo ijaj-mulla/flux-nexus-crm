@@ -367,8 +367,8 @@ const Opportunities = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="overflow-auto max-h-[600px]">
-              <Table>
+            <div className="overflow-x-auto max-h-[600px] overflow-y-auto">
+              <Table className="min-w-[1800px]">
                 <TableHeader className="sticky top-0 bg-background">
                   <TableRow>
                     <TableHead className="cursor-pointer" onClick={() => handleSort('name')}>Name</TableHead>
