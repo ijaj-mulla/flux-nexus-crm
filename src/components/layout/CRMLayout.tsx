@@ -33,7 +33,7 @@ export const CRMLayout: React.FC<CRMLayoutProps> = ({ children }) => {
             >
               <Menu className="w-5 h-5" />
             </Button>
-            <span className="text-lg font-semibold text-foreground">CRM</span>
+            <span className="text-lg font-semibold text-foreground"></span>
             <div className="w-9" /> {/* Spacer for centering */}
           </div>
         </header>
