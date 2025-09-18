@@ -1,4 +1,5 @@
 import React from "react";
+import { CRMToolbar } from "@/components/layout/CRMToolbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart3, TrendingUp, Users, DollarSign, Calendar, Activity } from "lucide-react";
 
@@ -11,7 +12,9 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">      
+    <div className="min-h-screen bg-background">
+      <CRMToolbar title="Dashboard" actions={[]} />
+      
       <div className="p-6 space-y-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
