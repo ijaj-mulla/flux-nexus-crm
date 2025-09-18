@@ -42,7 +42,7 @@ export const MUILayout = ({ children }) => {
               <Menu />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              CRM Pro
+              CRM
             </Typography>
           </Toolbar>
         </AppBar>
