@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Sample data for contacts
 const sampleContacts = [
@@ -60,12 +61,37 @@ const sampleContacts = [
     company: "Financial Services Group",
     role: "Manager",
     address: "654 Finance St, Chicago, IL 60601"
+  },
+  {
+    id: 6,
+    name: "Lisa Anderson",
+    email: "lisa.anderson@retailcorp.com",
+    phone: "+1 (555) 678-9012",
+    mobile: "+1 (555) 432-1098",
+    company: "Retail Corporation",
+    role: "VP Marketing",
+    address: "987 Retail Plaza, Los Angeles, CA 90001"
+  },
+  {
+    id: 7,
+    name: "Robert Taylor",
+    email: "robert.taylor@consulting.com",
+    phone: "+1 (555) 789-0123",
+    mobile: "+1 (555) 321-0987",
+    company: "Strategic Consulting",
+    role: "Senior Partner",
+    address: "147 Consulting Ave, Washington, DC 20001"
   }
 ];
 
 const Contacts = () => {
   const [showForm, setShowForm] = useState(false);
   const [contacts, setContacts] = useState(sampleContacts);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortField, setSortField] = useState("");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleToolbarAction = (action: string) => {
     if (action === 'add-new') {
@@ -75,9 +101,35 @@ const Contacts = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
     setShowForm(false);
   };
+
+  const handleSort = (field: string) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const filteredContacts = contacts.filter(contact =>
+    Object.values(contact).some(value =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  const sortedContacts = [...filteredContacts].sort((a, b) => {
+    if (!sortField) return 0;
+    const aValue = a[sortField as keyof typeof a];
+    const bValue = b[sortField as keyof typeof b];
+    const direction = sortDirection === "asc" ? 1 : -1;
+    return aValue > bValue ? direction : -direction;
+  });
+
+  const totalPages = Math.ceil(sortedContacts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedContacts = sortedContacts.slice(startIndex, startIndex + itemsPerPage);
 
   if (showForm) {
     return (
@@ -134,39 +186,88 @@ const Contacts = () => {
       <div className="p-6">
         <Card className="shadow-soft">
           <CardHeader>
-            <CardTitle>Contacts</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle>Contacts ({sortedContacts.length})</CardTitle>
+              <div className="flex items-center space-x-2">
+                <div className="relative">
+                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search contacts..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-8 w-64"
+                  />
+                </div>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Mobile</TableHead>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Role</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {contacts.map((contact) => (
-                  <TableRow key={contact.id} className="cursor-pointer hover:bg-muted/50">
-                    <TableCell className="font-medium">{contact.name}</TableCell>
-                    <TableCell>
-                      <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
-                        {contact.email}
-                      </a>
-                    </TableCell>
-                    <TableCell>{contact.phone}</TableCell>
-                    <TableCell>{contact.mobile}</TableCell>
-                    <TableCell>{contact.company}</TableCell>
-                    <TableCell>
-                      <Badge variant="outline">{contact.role}</Badge>
-                    </TableCell>
+            <div className="overflow-auto max-h-[600px]">
+              <Table>
+                <TableHeader className="sticky top-0 bg-background">
+                  <TableRow>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('name')}>Name</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('email')}>Email</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('phone')}>Phone</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('mobile')}>Mobile</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('company')}>Company</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('role')}>Role</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('address')}>Address</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {paginatedContacts.map((contact) => (
+                    <TableRow key={contact.id} className="cursor-pointer hover:bg-muted/50">
+                      <TableCell className="font-medium">{contact.name}</TableCell>
+                      <TableCell>
+                        <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+                          {contact.email}
+                        </a>
+                      </TableCell>
+                      <TableCell>{contact.phone}</TableCell>
+                      <TableCell>{contact.mobile}</TableCell>
+                      <TableCell>{contact.company}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{contact.role}</Badge>
+                      </TableCell>
+                      <TableCell className="max-w-xs truncate" title={contact.address}>
+                        {contact.address}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            
+            {/* Pagination */}
+            <div className="flex items-center justify-between mt-4">
+              <div className="text-sm text-muted-foreground">
+                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, sortedContacts.length)} of {sortedContacts.length} entries
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  Previous
+                </Button>
+                <span className="text-sm">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

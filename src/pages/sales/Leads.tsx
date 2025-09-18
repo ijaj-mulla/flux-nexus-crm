@@ -10,84 +10,135 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
-// Sample data for leads
+// Sample data for leads with all required fields
 const sampleLeads = [
   {
     id: 1,
     name: "Enterprise Software Solution",
     company: "TechStart Inc",
-    contactFirstName: "Alex",
-    contactLastName: "Johnson",
-    email: "alex.johnson@techstart.com",
-    phone: "+1 (555) 111-2222",
+    contactName: "Alex Johnson",
     status: "In Process",
-    priority: "High",
     qualificationLevel: "Hot",
     source: "Website",
-    owner: "John Smith"
+    category: "Enterprise",
+    priority: "High",
+    campaign: "Q1 Digital Campaign",
+    owner: "John Smith",
+    followUpActivity: "Product Demo",
+    city: "San Francisco",
+    country: "United States",
+    state: "California",
+    postalCode: "94105",
+    language: "English",
+    phone: "+1 (555) 111-2222",
+    mobile: "+1 (555) 111-2223",
+    email: "alex.johnson@techstart.com",
+    note: "Interested in enterprise-level solution for 500+ users"
   },
   {
     id: 2,
     name: "Cloud Migration Project",
     company: "Legacy Systems Corp",
-    contactFirstName: "Maria",
-    contactLastName: "Garcia",
-    email: "maria.garcia@legacy.com",
-    phone: "+1 (555) 333-4444",
+    contactName: "Maria Garcia",
     status: "Qualified",
-    priority: "Medium",
     qualificationLevel: "Warm",
     source: "Referral",
-    owner: "Sarah Johnson"
+    category: "Cloud Services",
+    priority: "Medium",
+    campaign: "Cloud Migration 2024",
+    owner: "Sarah Johnson",
+    followUpActivity: "Technical Assessment",
+    city: "Austin",
+    country: "United States",
+    state: "Texas",
+    postalCode: "78701",
+    language: "English",
+    phone: "+1 (555) 333-4444",
+    mobile: "+1 (555) 333-4445",
+    email: "maria.garcia@legacy.com",
+    note: "Looking to migrate legacy systems to cloud infrastructure"
   },
   {
     id: 3,
     name: "Digital Transformation Initiative",
     company: "Traditional Business Ltd",
-    contactFirstName: "Robert",
-    contactLastName: "Chen",
-    email: "robert.chen@traditional.com",
-    phone: "+1 (555) 555-6666",
+    contactName: "Robert Chen",
     status: "In Process",
-    priority: "High",
     qualificationLevel: "Hot",
     source: "Trade Show",
-    owner: "Mike Wilson"
+    category: "Digital Transformation",
+    priority: "High",
+    campaign: "Transform 2024",
+    owner: "Mike Wilson",
+    followUpActivity: "Strategy Workshop",
+    city: "Seattle",
+    country: "United States",
+    state: "Washington",
+    postalCode: "98101",
+    language: "English",
+    phone: "+1 (555) 555-6666",
+    mobile: "+1 (555) 555-6667",
+    email: "robert.chen@traditional.com",
+    note: "Complete digital transformation for manufacturing processes"
   },
   {
     id: 4,
     name: "CRM Implementation",
     company: "Growing Startup",
-    contactFirstName: "Lisa",
-    contactLastName: "Thompson",
-    email: "lisa.thompson@growing.com",
-    phone: "+1 (555) 777-8888",
-    status: "In Process",
-    priority: "Low",
+    contactName: "Lisa Thompson",
+    status: "New",
     qualificationLevel: "Cold",
     source: "Cold Call",
-    owner: "Emily Davis"
+    category: "CRM",
+    priority: "Low",
+    campaign: "Startup Outreach",
+    owner: "Emily Davis",
+    followUpActivity: "Discovery Call",
+    city: "Denver",
+    country: "United States",
+    state: "Colorado",
+    postalCode: "80202",
+    language: "English",
+    phone: "+1 (555) 777-8888",
+    mobile: "+1 (555) 777-8889",
+    email: "lisa.thompson@growing.com",
+    note: "Small startup looking for affordable CRM solution"
   },
   {
     id: 5,
     name: "Data Analytics Platform",
     company: "Analytics Pro",
-    contactFirstName: "James",
-    contactLastName: "Wilson",
-    email: "james.wilson@analyticspro.com",
-    phone: "+1 (555) 999-0000",
+    contactName: "James Wilson",
     status: "Qualified",
-    priority: "Medium",
     qualificationLevel: "Warm",
     source: "LinkedIn",
-    owner: "David Brown"
+    category: "Analytics",
+    priority: "Medium",
+    campaign: "Data Insights 2024",
+    owner: "David Brown",
+    followUpActivity: "ROI Analysis",
+    city: "Miami",
+    country: "United States",
+    state: "Florida",
+    postalCode: "33101",
+    language: "English",
+    phone: "+1 (555) 999-0000",
+    mobile: "+1 (555) 999-0001",
+    email: "james.wilson@analyticspro.com",
+    note: "Need advanced analytics platform for business intelligence"
   }
 ];
 
 const Leads = () => {
   const [showForm, setShowForm] = useState(false);
   const [leads, setLeads] = useState(sampleLeads);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortField, setSortField] = useState("");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleToolbarAction = (action: string) => {
     if (action === 'add-new') {
@@ -97,12 +148,38 @@ const Leads = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
     setShowForm(false);
   };
 
+  const handleSort = (field: string) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const filteredLeads = leads.filter(lead =>
+    Object.values(lead).some(value =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  const sortedLeads = [...filteredLeads].sort((a, b) => {
+    if (!sortField) return 0;
+    const aValue = a[sortField as keyof typeof a];
+    const bValue = b[sortField as keyof typeof b];
+    const direction = sortDirection === "asc" ? 1 : -1;
+    return aValue > bValue ? direction : -direction;
+  });
+
+  const totalPages = Math.ceil(sortedLeads.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedLeads = sortedLeads.slice(startIndex, startIndex + itemsPerPage);
+
   const getStatusBadge = (status: string) => {
-    const variant = status === "Qualified" ? "default" : "secondary";
+    const variant = status === "Qualified" ? "default" : status === "In Process" ? "secondary" : "outline";
     return <Badge variant={variant}>{status}</Badge>;
   };
 
@@ -133,12 +210,8 @@ const Leads = () => {
                 <Input id="company" placeholder="Enter company name" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="contactFirstName">Contact First Name</Label>
-                <Input id="contactFirstName" placeholder="Enter first name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="contactLastName">Contact Last Name</Label>
-                <Input id="contactLastName" placeholder="Enter last name" />
+                <Label htmlFor="contactName">Contact Name</Label>
+                <Input id="contactName" placeholder="Enter contact name" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="status">Status</Label>
@@ -147,6 +220,7 @@ const Leads = () => {
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="new">New</SelectItem>
                     <SelectItem value="in-process">In Process</SelectItem>
                     <SelectItem value="qualified">Qualified</SelectItem>
                   </SelectContent>
@@ -200,7 +274,7 @@ const Leads = () => {
               </div>
             </FormSection>
 
-            <FormSection title="Account Information">
+            <FormSection title="Location Information">
               <div className="space-y-2">
                 <Label htmlFor="city">City</Label>
                 <Input id="city" placeholder="Enter city" />
@@ -249,8 +323,8 @@ const Leads = () => {
 
             <FormSection title="Notes">
               <div className="space-y-2 lg:col-span-2">
-                <Label htmlFor="notes">Notes</Label>
-                <Textarea id="notes" placeholder="Enter notes" rows={4} />
+                <Label htmlFor="note">Note</Label>
+                <Textarea id="note" placeholder="Enter notes" rows={4} />
               </div>
             </FormSection>
 
@@ -271,45 +345,100 @@ const Leads = () => {
       <div className="p-6">
         <Card className="shadow-soft">
           <CardHeader>
-            <CardTitle>Leads</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle>Leads ({sortedLeads.length})</CardTitle>
+              <div className="flex items-center space-x-2">
+                <div className="relative">
+                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search leads..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-8 w-64"
+                  />
+                </div>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Lead Name</TableHead>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Qualification</TableHead>
-                  <TableHead>Source</TableHead>
-                  <TableHead>Owner</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {leads.map((lead) => (
-                  <TableRow key={lead.id} className="cursor-pointer hover:bg-muted/50">
-                    <TableCell className="font-medium">{lead.name}</TableCell>
-                    <TableCell>{lead.company}</TableCell>
-                    <TableCell>{lead.contactFirstName} {lead.contactLastName}</TableCell>
-                    <TableCell>
-                      <a href={`mailto:${lead.email}`} className="text-primary hover:underline">
-                        {lead.email}
-                      </a>
-                    </TableCell>
-                    <TableCell>{lead.phone}</TableCell>
-                    <TableCell>{getStatusBadge(lead.status)}</TableCell>
-                    <TableCell>{getPriorityBadge(lead.priority)}</TableCell>
-                    <TableCell>{getQualificationBadge(lead.qualificationLevel)}</TableCell>
-                    <TableCell>{lead.source}</TableCell>
-                    <TableCell>{lead.owner}</TableCell>
+            <div className="overflow-auto max-h-[600px]">
+              <Table>
+                <TableHeader className="sticky top-0 bg-background">
+                  <TableRow>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('name')}>Name</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('company')}>Company</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('contactName')}>Contact Name</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('status')}>Status</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('qualificationLevel')}>Qualification</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('source')}>Source</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('category')}>Category</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('priority')}>Priority</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('campaign')}>Campaign</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('owner')}>Owner</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('followUpActivity')}>Follow-up</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('city')}>City</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('state')}>State</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('phone')}>Phone</TableHead>
+                    <TableHead className="cursor-pointer" onClick={() => handleSort('email')}>Email</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {paginatedLeads.map((lead) => (
+                    <TableRow key={lead.id} className="cursor-pointer hover:bg-muted/50">
+                      <TableCell className="font-medium">{lead.name}</TableCell>
+                      <TableCell>{lead.company}</TableCell>
+                      <TableCell>{lead.contactName}</TableCell>
+                      <TableCell>{getStatusBadge(lead.status)}</TableCell>
+                      <TableCell>{getQualificationBadge(lead.qualificationLevel)}</TableCell>
+                      <TableCell>{lead.source}</TableCell>
+                      <TableCell>{lead.category}</TableCell>
+                      <TableCell>{getPriorityBadge(lead.priority)}</TableCell>
+                      <TableCell>{lead.campaign}</TableCell>
+                      <TableCell>{lead.owner}</TableCell>
+                      <TableCell>{lead.followUpActivity}</TableCell>
+                      <TableCell>{lead.city}</TableCell>
+                      <TableCell>{lead.state}</TableCell>
+                      <TableCell>{lead.phone}</TableCell>
+                      <TableCell>
+                        <a href={`mailto:${lead.email}`} className="text-primary hover:underline">
+                          {lead.email}
+                        </a>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            
+            {/* Pagination */}
+            <div className="flex items-center justify-between mt-4">
+              <div className="text-sm text-muted-foreground">
+                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, sortedLeads.length)} of {sortedLeads.length} entries
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  Previous
+                </Button>
+                <span className="text-sm">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
