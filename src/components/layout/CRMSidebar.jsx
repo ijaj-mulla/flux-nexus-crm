@@ -22,14 +22,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-interface MenuItem {
-  name: string;
-  icon: React.ElementType;
-  path?: string;
-  children?: MenuItem[];
-}
-
-const menuItems: MenuItem[] = [
+const menuItems = [
   {
     name: "Home",
     icon: Home,
@@ -93,15 +86,10 @@ const menuItems: MenuItem[] = [
   }
 ];
 
-interface CRMSidebarProps {
-  isOpen: boolean;
-  onToggle: () => void;
-}
+export const CRMSidebar = ({ isOpen, onToggle }) => {
+  const [openMenus, setOpenMenus] = useState(["Home"]);
 
-export const CRMSidebar: React.FC<CRMSidebarProps> = ({ isOpen, onToggle }) => {
-  const [openMenus, setOpenMenus] = useState<string[]>(["Home"]);
-
-  const toggleMenu = (menuName: string) => {
+  const toggleMenu = (menuName) => {
     setOpenMenus(prev => 
       prev.includes(menuName)
         ? prev.filter(name => name !== menuName)
@@ -109,7 +97,7 @@ export const CRMSidebar: React.FC<CRMSidebarProps> = ({ isOpen, onToggle }) => {
     );
   };
 
-  const isMenuOpen = (menuName: string) => openMenus.includes(menuName);
+  const isMenuOpen = (menuName) => openMenus.includes(menuName);
 
   return (
     <>

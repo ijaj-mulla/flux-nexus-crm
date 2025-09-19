@@ -4,11 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface CRMLayoutProps {
-  children: React.ReactNode;
-}
-
-export const CRMLayout: React.FC<CRMLayoutProps> = ({ children }) => {
+export const CRMLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {

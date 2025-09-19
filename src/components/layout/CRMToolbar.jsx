@@ -17,13 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-interface ToolbarAction {
-  icon: React.ElementType;
-  label: string;
-  onClick?: () => void;
-}
-
-const defaultActions: ToolbarAction[] = [
+const defaultActions = [
   { icon: Search, label: "Search" },
   { icon: ArrowUpDown, label: "Sort" },
   { icon: PieChart, label: "Chart/Stats" },
@@ -33,14 +27,7 @@ const defaultActions: ToolbarAction[] = [
   { icon: MoreHorizontal, label: "More Options" }
 ];
 
-interface CRMToolbarProps {
-  title?: string;
-  actions?: ToolbarAction[];
-  onAction?: (action: string) => void;
-  className?: string;
-}
-
-export const CRMToolbar: React.FC<CRMToolbarProps> = ({ 
+export const CRMToolbar = ({ 
   title, 
   actions = defaultActions, 
   onAction,

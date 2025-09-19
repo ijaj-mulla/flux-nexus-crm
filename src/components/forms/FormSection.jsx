@@ -1,13 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface FormSectionProps {
-  title: string;
-  children: React.ReactNode;
-  className?: string;
-}
-
-export const FormSection: React.FC<FormSectionProps> = ({ 
+export const FormSection = ({ 
   title, 
   children, 
   className 

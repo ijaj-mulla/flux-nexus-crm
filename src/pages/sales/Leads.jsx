@@ -136,22 +136,22 @@ const Leads = () => {
   const [leads, setLeads] = useState(sampleLeads);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState("");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const handleToolbarAction = (action: string) => {
+  const handleToolbarAction = (action) => {
     if (action === 'add-new') {
       setShowForm(true);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setShowForm(false);
   };
 
-  const handleSort = (field: string) => {
+  const handleSort = (field) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -168,8 +168,8 @@ const Leads = () => {
 
   const sortedLeads = [...filteredLeads].sort((a, b) => {
     if (!sortField) return 0;
-    const aValue = a[sortField as keyof typeof a];
-    const bValue = b[sortField as keyof typeof b];
+    const aValue = a[sortField];
+    const bValue = b[sortField];
     const direction = sortDirection === "asc" ? 1 : -1;
     return aValue > bValue ? direction : -direction;
   });
@@ -178,17 +178,17 @@ const Leads = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedLeads = sortedLeads.slice(startIndex, startIndex + itemsPerPage);
 
-  const getStatusBadge = (status: string) => {
+  const getStatusBadge = (status) => {
     const variant = status === "Qualified" ? "default" : status === "In Process" ? "secondary" : "outline";
     return <Badge variant={variant}>{status}</Badge>;
   };
 
-  const getPriorityBadge = (priority: string) => {
+  const getPriorityBadge = (priority) => {
     const variant = priority === "High" ? "destructive" : priority === "Medium" ? "default" : "outline";
     return <Badge variant={variant}>{priority}</Badge>;
   };
 
-  const getQualificationBadge = (level: string) => {
+  const getQualificationBadge = (level) => {
     const variant = level === "Hot" ? "destructive" : level === "Warm" ? "default" : "outline";
     return <Badge variant={variant}>{level}</Badge>;
   };

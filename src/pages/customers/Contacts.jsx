@@ -89,22 +89,22 @@ const Contacts = () => {
   const [contacts, setContacts] = useState(sampleContacts);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState("");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const handleToolbarAction = (action: string) => {
+  const handleToolbarAction = (action) => {
     if (action === 'add-new') {
       setShowForm(true);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setShowForm(false);
   };
 
-  const handleSort = (field: string) => {
+  const handleSort = (field) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -121,8 +121,8 @@ const Contacts = () => {
 
   const sortedContacts = [...filteredContacts].sort((a, b) => {
     if (!sortField) return 0;
-    const aValue = a[sortField as keyof typeof a];
-    const bValue = b[sortField as keyof typeof b];
+    const aValue = a[sortField];
+    const bValue = b[sortField];
     const direction = sortDirection === "asc" ? 1 : -1;
     return aValue > bValue ? direction : -direction;
   });
