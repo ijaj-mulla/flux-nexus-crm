@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { CRMToolbar } from "@/components/layout/CRMToolbar";
-import { FormCard } from "@/components/forms/FormCard";
-import { FormSection } from "@/components/forms/FormSection";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,124 +8,115 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Search, ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
-// Sample data for opportunities with same fields as leads
+// Sample data for opportunities with all required fields
 const sampleOpportunities = [
   {
     id: 1,
     name: "Enterprise Software Deal",
-    company: "Fortune 500 Corp",
-    contactName: "Jennifer Martinez",
-    status: "Proposal",
-    qualificationLevel: "Hot",
+    account: "Fortune 500 Corp",
+    opportunityGroup: "Large Enterprise",
+    opportunityType: "New Business",
+    industry: "Technology",
+    subIndustry: "Enterprise Software",
+    primaryContact: "Jennifer Martinez",
     source: "Referral",
+    expectedValue: 500000,
+    startDate: "2024-01-15",
+    closeDate: "2024-06-30",
+    salesPhase: "Proposal",
+    probability: 75,
+    forecastCategory: "Commit",
     category: "Enterprise Software",
-    priority: "High",
-    campaign: "Enterprise Q1 2024",
     owner: "John Smith",
-    followUpActivity: "Contract Review",
-    city: "New York",
-    country: "United States",
-    state: "New York",
-    postalCode: "10001",
-    language: "English",
-    phone: "+1 (555) 100-2000",
-    mobile: "+1 (555) 100-2001",
-    email: "jennifer.martinez@fortune500.com",
-    note: "Large enterprise deal worth $500K+ annually"
+    note: "Large enterprise deal worth $500K+ annually",
+    status: "Active"
   },
   {
     id: 2,
     name: "Cloud Infrastructure Upgrade",
-    company: "Mid-Size Manufacturing",
-    contactName: "Carlos Rodriguez",
-    status: "Negotiation",
-    qualificationLevel: "Warm",
+    account: "Mid-Size Manufacturing",
+    opportunityGroup: "Mid Market",
+    opportunityType: "Upsell",
+    industry: "Manufacturing",
+    subIndustry: "Industrial Equipment",
+    primaryContact: "Carlos Rodriguez",
     source: "Website",
+    expectedValue: 250000,
+    startDate: "2024-02-01",
+    closeDate: "2024-08-15",
+    salesPhase: "Negotiation",
+    probability: 60,
+    forecastCategory: "Best Case",
     category: "Cloud Services",
-    priority: "Medium",
-    campaign: "Cloud Migration 2024",
     owner: "Sarah Johnson",
-    followUpActivity: "Final Pricing",
-    city: "Chicago",
-    country: "United States",
-    state: "Illinois",
-    postalCode: "60601",
-    language: "English",
-    phone: "+1 (555) 200-3000",
-    mobile: "+1 (555) 200-3001",
-    email: "carlos.rodriguez@midsize.com",
-    note: "Multi-year cloud infrastructure deal with expansion potential"
+    note: "Multi-year cloud infrastructure deal with expansion potential",
+    status: "Active"
   },
   {
     id: 3,
     name: "Digital Transformation Package",
-    company: "Regional Bank",
-    contactName: "Amanda Foster",
-    status: "Qualified",
-    qualificationLevel: "Hot",
+    account: "Regional Bank",
+    opportunityGroup: "Enterprise",
+    opportunityType: "New Business",
+    industry: "Financial Services",
+    subIndustry: "Banking",
+    primaryContact: "Amanda Foster",
     source: "Trade Show",
+    expectedValue: 750000,
+    startDate: "2024-01-20",
+    closeDate: "2024-09-30",
+    salesPhase: "Qualified",
+    probability: 85,
+    forecastCategory: "Commit",
     category: "Digital Transformation",
-    priority: "High",
-    campaign: "Banking Solutions 2024",
     owner: "Mike Wilson",
-    followUpActivity: "Executive Presentation",
-    city: "Atlanta",
-    country: "United States",
-    state: "Georgia",
-    postalCode: "30301",
-    language: "English",
-    phone: "+1 (555) 300-4000",
-    mobile: "+1 (555) 300-4001",
-    email: "amanda.foster@regionalbank.com",
-    note: "Complete digital transformation for banking operations"
+    note: "Complete digital transformation for banking operations",
+    status: "Active"
   },
   {
     id: 4,
     name: "Analytics Platform Implementation",
-    company: "Healthcare Network",
-    contactName: "Dr. Michael Chang",
-    status: "Discovery",
-    qualificationLevel: "Warm",
+    account: "Healthcare Network",
+    opportunityGroup: "Large Enterprise",
+    opportunityType: "New Business",
+    industry: "Healthcare",
+    subIndustry: "Hospital Systems",
+    primaryContact: "Dr. Michael Chang",
     source: "LinkedIn",
+    expectedValue: 180000,
+    startDate: "2024-03-01",
+    closeDate: "2024-10-15",
+    salesPhase: "Discovery",
+    probability: 40,
+    forecastCategory: "Pipeline",
     category: "Healthcare Analytics",
-    priority: "Medium",
-    campaign: "Healthcare 2024",
     owner: "Emily Davis",
-    followUpActivity: "Technical Demo",
-    city: "Los Angeles",
-    country: "United States",
-    state: "California",
-    postalCode: "90001",
-    language: "English",
-    phone: "+1 (555) 400-5000",
-    mobile: "+1 (555) 400-5001",
-    email: "michael.chang@healthnet.com",
-    note: "Advanced analytics for patient care optimization"
+    note: "Advanced analytics for patient care optimization",
+    status: "Active"
   },
   {
     id: 5,
     name: "Security Solutions Upgrade",
-    company: "Tech Startup Hub",
-    contactName: "Rachel Kim",
-    status: "Proposal",
-    qualificationLevel: "Hot",
+    account: "Tech Startup Hub",
+    opportunityGroup: "SMB",
+    opportunityType: "Renewal",
+    industry: "Technology",
+    subIndustry: "Cybersecurity",
+    primaryContact: "Rachel Kim",
     source: "Partner Referral",
+    expectedValue: 95000,
+    startDate: "2024-02-15",
+    closeDate: "2024-07-30",
+    salesPhase: "Proposal",
+    probability: 70,
+    forecastCategory: "Best Case",
     category: "Cybersecurity",
-    priority: "High",
-    campaign: "Security First 2024",
     owner: "David Brown",
-    followUpActivity: "Security Assessment",
-    city: "San Francisco",
-    country: "United States",
-    state: "California",
-    postalCode: "94105",
-    language: "English",
-    phone: "+1 (555) 500-6000",
-    mobile: "+1 (555) 500-6001",
-    email: "rachel.kim@techstartup.com",
-    note: "Comprehensive security solution for growing startup ecosystem"
+    note: "Comprehensive security solution for growing startup ecosystem",
+    status: "Active"
   }
 ];
 
@@ -138,6 +127,26 @@ const Opportunities = () => {
   const [sortField, setSortField] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
+  const [formData, setFormData] = useState({
+    name: "",
+    account: "",
+    opportunityGroup: "",
+    opportunityType: "",
+    industry: "",
+    subIndustry: "",
+    primaryContact: "",
+    source: "",
+    expectedValue: "",
+    startDate: "",
+    closeDate: "",
+    salesPhase: "Discovery",
+    probability: "",
+    forecastCategory: "Pipeline",
+    category: "",
+    owner: "",
+    note: "",
+    status: "Active"
+  });
   const itemsPerPage = 10;
 
   const handleToolbarAction = (action) => {
@@ -148,7 +157,38 @@ const Opportunities = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newOpportunity = {
+      ...formData,
+      id: opportunities.length + 1,
+      expectedValue: parseFloat(formData.expectedValue) || 0,
+      probability: parseInt(formData.probability) || 0
+    };
+    setOpportunities([...opportunities, newOpportunity]);
+    setFormData({
+      name: "",
+      account: "",
+      opportunityGroup: "",
+      opportunityType: "",
+      industry: "",
+      subIndustry: "",
+      primaryContact: "",
+      source: "",
+      expectedValue: "",
+      startDate: "",
+      closeDate: "",
+      salesPhase: "Discovery",
+      probability: "",
+      forecastCategory: "Pipeline",
+      category: "",
+      owner: "",
+      note: "",
+      status: "Active"
+    });
     setShowForm(false);
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleSort = (field) => {
@@ -178,171 +218,41 @@ const Opportunities = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedOpportunities = sortedOpportunities.slice(startIndex, startIndex + itemsPerPage);
 
-  const getStatusBadge = (status) => {
-    const statusColors = {
+  const getSalesPhaseBadge = (phase) => {
+    const phaseColors = {
       "Discovery": "outline",
       "Qualified": "secondary",
       "Proposal": "default",
-      "Negotiation": "destructive"
+      "Negotiation": "destructive",
+      "Closed Won": "default",
+      "Closed Lost": "destructive"
     };
-    return <Badge variant={statusColors[status]}>{status}</Badge>;
+    return <Badge variant={phaseColors[phase] || "outline"}>{phase}</Badge>;
   };
 
-  const getPriorityBadge = (priority) => {
-    const variant = priority === "High" ? "destructive" : priority === "Medium" ? "default" : "outline";
-    return <Badge variant={variant}>{priority}</Badge>;
+  const getForecastBadge = (category) => {
+    const categoryColors = {
+      "Pipeline": "outline",
+      "Best Case": "secondary",
+      "Commit": "default",
+      "Closed": "destructive"
+    };
+    return <Badge variant={categoryColors[category] || "outline"}>{category}</Badge>;
   };
 
-  const getQualificationBadge = (level) => {
-    const variant = level === "Hot" ? "destructive" : level === "Warm" ? "default" : "outline";
-    return <Badge variant={variant}>{level}</Badge>;
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
   };
 
-  if (showForm) {
-    return (
-      <div className="min-h-screen bg-background">
-        <CRMToolbar title="Opportunities - New Opportunity" onAction={handleToolbarAction} />
-        
-        <div className="p-6">
-          <FormCard title="Opportunity Information">
-            <FormSection title="General Details">
-              <div className="space-y-2">
-                <Label htmlFor="opportunityName">Name</Label>
-                <Input id="opportunityName" placeholder="Enter opportunity name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="company">Company</Label>
-                <Input id="company" placeholder="Enter company name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="contactName">Contact Name</Label>
-                <Input id="contactName" placeholder="Enter contact name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="status">Status</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="discovery">Discovery</SelectItem>
-                    <SelectItem value="qualified">Qualified</SelectItem>
-                    <SelectItem value="proposal">Proposal</SelectItem>
-                    <SelectItem value="negotiation">Negotiation</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="qualificationLevel">Qualification Level</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select qualification level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cold">Cold</SelectItem>
-                    <SelectItem value="warm">Warm</SelectItem>
-                    <SelectItem value="hot">Hot</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="source">Source</Label>
-                <Input id="source" placeholder="Enter opportunity source" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
-                <Input id="category" placeholder="Enter category" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="priority">Priority</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select priority" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="campaign">Campaign</Label>
-                <Input id="campaign" placeholder="Enter campaign" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="owner">Owner</Label>
-                <Input id="owner" placeholder="Enter owner" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="followUpActivity">Follow-up Activity</Label>
-                <Input id="followUpActivity" placeholder="Enter follow-up activity" />
-              </div>
-            </FormSection>
-
-            <FormSection title="Location Information">
-              <div className="space-y-2">
-                <Label htmlFor="city">City</Label>
-                <Input id="city" placeholder="Enter city" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="country">Country/Region</Label>
-                <Input id="country" placeholder="Enter country/region" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="state">State</Label>
-                <Input id="state" placeholder="Enter state" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="postalCode">Postal Code</Label>
-                <Input id="postalCode" placeholder="Enter postal code" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="language">Language</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select language" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="es">Spanish</SelectItem>
-                    <SelectItem value="fr">French</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </FormSection>
-
-            <FormSection title="Contact Information">
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" placeholder="Enter phone number" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="mobile">Mobile</Label>
-                <Input id="mobile" placeholder="Enter mobile number" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter email address" />
-              </div>
-            </FormSection>
-
-            <FormSection title="Notes">
-              <div className="space-y-2 lg:col-span-2">
-                <Label htmlFor="note">Note</Label>
-                <Textarea id="note" placeholder="Enter notes" rows={4} />
-              </div>
-            </FormSection>
-
-            <div className="flex justify-end space-x-4 pt-6 border-t border-border">
-              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-              <Button onClick={handleSubmit}>Save Opportunity</Button>
-            </div>
-          </FormCard>
-        </div>
-      </div>
-    );
-  }
+  const getStatusBadge = (status) => {
+    const variant = status === "Active" ? "default" : "destructive";
+    return <Badge variant={variant}>{status}</Badge>;
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -363,53 +273,282 @@ const Opportunities = () => {
                     className="pl-8 w-64"
                   />
                 </div>
+                <Dialog open={showForm} onOpenChange={setShowForm}>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Opportunity
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Add New Opportunity</DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="name">Name *</Label>
+                          <Input
+                            id="name"
+                            value={formData.name}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                            placeholder="Enter opportunity name"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="account">Account</Label>
+                          <Input
+                            id="account"
+                            value={formData.account}
+                            onChange={(e) => handleInputChange('account', e.target.value)}
+                            placeholder="Enter account name"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="opportunityGroup">Opportunity Group</Label>
+                          <Select value={formData.opportunityGroup} onValueChange={(value) => handleInputChange('opportunityGroup', value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select opportunity group" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="SMB">SMB</SelectItem>
+                              <SelectItem value="Mid Market">Mid Market</SelectItem>
+                              <SelectItem value="Enterprise">Enterprise</SelectItem>
+                              <SelectItem value="Large Enterprise">Large Enterprise</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="opportunityType">Opportunity Type</Label>
+                          <Select value={formData.opportunityType} onValueChange={(value) => handleInputChange('opportunityType', value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select opportunity type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="New Business">New Business</SelectItem>
+                              <SelectItem value="Upsell">Upsell</SelectItem>
+                              <SelectItem value="Renewal">Renewal</SelectItem>
+                              <SelectItem value="Cross-sell">Cross-sell</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="industry">Industry</Label>
+                          <Input
+                            id="industry"
+                            value={formData.industry}
+                            onChange={(e) => handleInputChange('industry', e.target.value)}
+                            placeholder="Enter industry"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="subIndustry">Sub Industry</Label>
+                          <Input
+                            id="subIndustry"
+                            value={formData.subIndustry}
+                            onChange={(e) => handleInputChange('subIndustry', e.target.value)}
+                            placeholder="Enter sub industry"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="primaryContact">Primary Contact</Label>
+                          <Input
+                            id="primaryContact"
+                            value={formData.primaryContact}
+                            onChange={(e) => handleInputChange('primaryContact', e.target.value)}
+                            placeholder="Enter primary contact name"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="source">Source</Label>
+                          <Select value={formData.source} onValueChange={(value) => handleInputChange('source', value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select source" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Website">Website</SelectItem>
+                              <SelectItem value="Referral">Referral</SelectItem>
+                              <SelectItem value="Trade Show">Trade Show</SelectItem>
+                              <SelectItem value="LinkedIn">LinkedIn</SelectItem>
+                              <SelectItem value="Partner Referral">Partner Referral</SelectItem>
+                              <SelectItem value="Cold Call">Cold Call</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="expectedValue">Expected Value ($)</Label>
+                          <Input
+                            id="expectedValue"
+                            type="number"
+                            value={formData.expectedValue}
+                            onChange={(e) => handleInputChange('expectedValue', e.target.value)}
+                            placeholder="Enter expected value"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="startDate">Start Date</Label>
+                          <Input
+                            id="startDate"
+                            type="date"
+                            value={formData.startDate}
+                            onChange={(e) => handleInputChange('startDate', e.target.value)}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="closeDate">Close Date</Label>
+                          <Input
+                            id="closeDate"
+                            type="date"
+                            value={formData.closeDate}
+                            onChange={(e) => handleInputChange('closeDate', e.target.value)}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="salesPhase">Sales Phase</Label>
+                          <Select value={formData.salesPhase} onValueChange={(value) => handleInputChange('salesPhase', value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select sales phase" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Discovery">Discovery</SelectItem>
+                              <SelectItem value="Qualified">Qualified</SelectItem>
+                              <SelectItem value="Proposal">Proposal</SelectItem>
+                              <SelectItem value="Negotiation">Negotiation</SelectItem>
+                              <SelectItem value="Closed Won">Closed Won</SelectItem>
+                              <SelectItem value="Closed Lost">Closed Lost</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="probability">Probability (%)</Label>
+                          <Input
+                            id="probability"
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={formData.probability}
+                            onChange={(e) => handleInputChange('probability', e.target.value)}
+                            placeholder="Enter probability (0-100)"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="forecastCategory">Forecast Category</Label>
+                          <Select value={formData.forecastCategory} onValueChange={(value) => handleInputChange('forecastCategory', value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select forecast category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Pipeline">Pipeline</SelectItem>
+                              <SelectItem value="Best Case">Best Case</SelectItem>
+                              <SelectItem value="Commit">Commit</SelectItem>
+                              <SelectItem value="Closed">Closed</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="category">Category</Label>
+                          <Input
+                            id="category"
+                            value={formData.category}
+                            onChange={(e) => handleInputChange('category', e.target.value)}
+                            placeholder="Enter category"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="owner">Owner</Label>
+                          <Input
+                            id="owner"
+                            value={formData.owner}
+                            onChange={(e) => handleInputChange('owner', e.target.value)}
+                            placeholder="Enter owner name"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="status">Status</Label>
+                          <Select value={formData.status} onValueChange={(value) => handleInputChange('status', value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Active">Active</SelectItem>
+                              <SelectItem value="Inactive">Inactive</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="note">Note</Label>
+                        <Textarea
+                          id="note"
+                          value={formData.note}
+                          onChange={(e) => handleInputChange('note', e.target.value)}
+                          placeholder="Enter notes"
+                          rows={4}
+                        />
+                      </div>
+                      <div className="flex justify-end space-x-4 pt-4 border-t">
+                        <Button type="button" variant="outline" onClick={() => setShowForm(false)}>
+                          Cancel
+                        </Button>
+                        <Button type="submit">Save Opportunity</Button>
+                      </div>
+                    </form>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="overflow-auto max-h-[600px]">
-              <Table>
-                <TableHeader className="sticky top-0 bg-background">
+          <CardContent className="p-0">
+            <div className="overflow-y-auto max-h-[600px] w-full">
+              <Table className="min-w-max">
+                <TableHeader className="sticky top-0 bg-background z-10">
                   <TableRow>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('name')}>Name</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('company')}>Company</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('contactName')}>Contact Name</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('status')}>Status</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('qualificationLevel')}>Qualification</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('source')}>Source</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('category')}>Category</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('priority')}>Priority</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('campaign')}>Campaign</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('owner')}>Owner</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('followUpActivity')}>Follow-up</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('city')}>City</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('state')}>State</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('phone')}>Phone</TableHead>
-                    <TableHead className="cursor-pointer" onClick={() => handleSort('email')}>Email</TableHead>
+                    <TableHead className="cursor-pointer min-w-[200px]" onClick={() => handleSort('name')}>Name</TableHead>
+                    <TableHead className="cursor-pointer min-w-[180px]" onClick={() => handleSort('account')}>Account</TableHead>
+                    <TableHead className="cursor-pointer min-w-[140px]" onClick={() => handleSort('opportunityGroup')}>Opportunity Group</TableHead>
+                    <TableHead className="cursor-pointer min-w-[140px]" onClick={() => handleSort('opportunityType')}>Opportunity Type</TableHead>
+                    <TableHead className="cursor-pointer min-w-[120px]" onClick={() => handleSort('industry')}>Industry</TableHead>
+                    <TableHead className="cursor-pointer min-w-[140px]" onClick={() => handleSort('subIndustry')}>Sub Industry</TableHead>
+                    <TableHead className="cursor-pointer min-w-[160px]" onClick={() => handleSort('primaryContact')}>Primary Contact</TableHead>
+                    <TableHead className="cursor-pointer min-w-[120px]" onClick={() => handleSort('source')}>Source</TableHead>
+                    <TableHead className="cursor-pointer min-w-[140px]" onClick={() => handleSort('expectedValue')}>Expected Value</TableHead>
+                    <TableHead className="cursor-pointer min-w-[120px]" onClick={() => handleSort('startDate')}>Start Date</TableHead>
+                    <TableHead className="cursor-pointer min-w-[120px]" onClick={() => handleSort('closeDate')}>Close Date</TableHead>
+                    <TableHead className="cursor-pointer min-w-[130px]" onClick={() => handleSort('salesPhase')}>Sales Phase</TableHead>
+                    <TableHead className="cursor-pointer min-w-[110px]" onClick={() => handleSort('probability')}>Probability</TableHead>
+                    <TableHead className="cursor-pointer min-w-[140px]" onClick={() => handleSort('forecastCategory')}>Forecast Category</TableHead>
+                    <TableHead className="cursor-pointer min-w-[120px]" onClick={() => handleSort('category')}>Category</TableHead>
+                    <TableHead className="cursor-pointer min-w-[120px]" onClick={() => handleSort('owner')}>Owner</TableHead>
+                    <TableHead className="cursor-pointer min-w-[100px]" onClick={() => handleSort('status')}>Status</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {paginatedOpportunities.map((opportunity) => (
                     <TableRow key={opportunity.id} className="cursor-pointer hover:bg-muted/50">
                       <TableCell className="font-medium">{opportunity.name}</TableCell>
-                      <TableCell>{opportunity.company}</TableCell>
-                      <TableCell>{opportunity.contactName}</TableCell>
-                      <TableCell>{getStatusBadge(opportunity.status)}</TableCell>
-                      <TableCell>{getQualificationBadge(opportunity.qualificationLevel)}</TableCell>
-                      <TableCell>{opportunity.source}</TableCell>
-                      <TableCell>{opportunity.category}</TableCell>
-                      <TableCell>{getPriorityBadge(opportunity.priority)}</TableCell>
-                      <TableCell>{opportunity.campaign}</TableCell>
-                      <TableCell>{opportunity.owner}</TableCell>
-                      <TableCell>{opportunity.followUpActivity}</TableCell>
-                      <TableCell>{opportunity.city}</TableCell>
-                      <TableCell>{opportunity.state}</TableCell>
-                      <TableCell>{opportunity.phone}</TableCell>
+                      <TableCell>{opportunity.account}</TableCell>
                       <TableCell>
-                        <a href={`mailto:${opportunity.email}`} className="text-primary hover:underline">
-                          {opportunity.email}
-                        </a>
+                        <Badge variant="outline">{opportunity.opportunityGroup}</Badge>
                       </TableCell>
+                      <TableCell>
+                        <Badge variant="secondary">{opportunity.opportunityType}</Badge>
+                      </TableCell>
+                      <TableCell>{opportunity.industry}</TableCell>
+                      <TableCell>{opportunity.subIndustry}</TableCell>
+                      <TableCell>{opportunity.primaryContact}</TableCell>
+                      <TableCell>{opportunity.source}</TableCell>
+                      <TableCell className="font-medium">{formatCurrency(opportunity.expectedValue)}</TableCell>
+                      <TableCell>{opportunity.startDate}</TableCell>
+                      <TableCell>{opportunity.closeDate}</TableCell>
+                      <TableCell>{getSalesPhaseBadge(opportunity.salesPhase)}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{opportunity.probability}%</Badge>
+                      </TableCell>
+                      <TableCell>{getForecastBadge(opportunity.forecastCategory)}</TableCell>
+                      <TableCell>{opportunity.category}</TableCell>
+                      <TableCell>{opportunity.owner}</TableCell>
+                      <TableCell>{getStatusBadge(opportunity.status)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -417,7 +556,7 @@ const Opportunities = () => {
             </div>
             
             {/* Pagination */}
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center justify-between p-4 border-t">
               <div className="text-sm text-muted-foreground">
                 Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, sortedOpportunities.length)} of {sortedOpportunities.length} entries
               </div>
